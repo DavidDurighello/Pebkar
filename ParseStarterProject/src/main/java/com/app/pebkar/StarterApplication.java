@@ -27,6 +27,9 @@ public class StarterApplication extends Application {
 
     //DBClass
     ParseObject.registerSubclass(ListeCovoiturageDB.class);
+    ParseObject.registerSubclass(NotationDB.class);
+    ParseObject.registerSubclass(PassagersDB.class);
+    ParseObject.registerSubclass(ProfilDB.class);
 
     // Add your initialization code here
     Parse.initialize(this, "fc7IlnwGrW6KgP43o6dHNir9W20xzqEhr94EMVyW","BMclWPRzlY4yn5yR7ZdbyOXkohQVJOIoBnBwfi2I");
