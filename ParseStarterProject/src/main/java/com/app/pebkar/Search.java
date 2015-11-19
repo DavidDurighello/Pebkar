@@ -8,6 +8,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.app.pebkar.Modele.ListeCovoiturage;
+import com.app.pebkar.Modele.ListeCovoiturageDB;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -23,7 +24,21 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        ListeCovoiturage lc = new ListeCovoiturage();
+
+        ListeCovoiturageDB listeCovoiturageDB = new ListeCovoiturageDB();
+        ListView lv_search = (ListView) findViewById(R.id.lv_search);
+        List<String> li_search = null;
+        try {
+            li_search = listeCovoiturageDB.readData();
+            ArrayAdapter<String> aa_search;
+            aa_search = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, li_search);
+            lv_search.setAdapter(aa_search);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        /*ListeCovoiturage lc = new ListeCovoiturage();
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
         query.whereNotEqualTo("idListeCovoiturage", 0);
         query.findInBackground(new FindCallback<ListeCovoiturage>() {
@@ -53,7 +68,7 @@ public class Search extends AppCompatActivity {
                 aa_search = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, li_search);
                 lv_search.setAdapter(aa_search);
             }
-        });
+        });*/
         /*
         ListView lv_search = (ListView) findViewById(R.id.lv_search);
         List<String> li_search = new ArrayList<String>();

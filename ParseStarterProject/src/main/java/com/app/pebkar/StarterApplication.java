@@ -11,6 +11,7 @@ package com.app.pebkar;
 import android.app.Application;
 
 import com.app.pebkar.Modele.ListeCovoiturage;
+import com.app.pebkar.Modele.ListeCovoiturageDB;
 import com.app.pebkar.Modele.Notation;
 import com.app.pebkar.Modele.Passagers;
 import com.app.pebkar.Modele.Profil;
@@ -30,6 +31,7 @@ public class StarterApplication extends Application {
     Parse.enableLocalDatastore(this);
 
     //DBClass
+    ParseObject.registerSubclass(ListeCovoiturageDB.class);
     ParseObject.registerSubclass(ListeCovoiturage.class);
     ParseObject.registerSubclass(Notation.class);
     ParseObject.registerSubclass(Passagers.class);
