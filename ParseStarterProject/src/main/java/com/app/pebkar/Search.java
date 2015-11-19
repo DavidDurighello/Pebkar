@@ -24,8 +24,9 @@ public class Search extends AppCompatActivity {
             @Override
             public void done(List<ListeCovoiturageDB> listeCovoiturage, ParseException e) {
                 if(e==null){
+                    int i = 0;
                     for(ListeCovoiturageDB lc : listeCovoiturage){
-                        System.out.println(lc.getIdListeCovoiturage()+": "+lc.getLieudepart());
+                        System.out.println(lc.get("idListeCovoiturage")+": "+lc.get("lieudepart")+" "+lc.get("lieuarrivee")+" "+lc.get("datedepart")+" "+lc.get("datearrivee"));
                     }
                 } else {
                     System.out.println(e.getMessage());
