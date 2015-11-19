@@ -7,12 +7,14 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.app.pebkar.Modele.ListeCovoiturage;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Search extends AppCompatActivity {
 
@@ -21,30 +23,46 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-
-        ListeCovoiturageDB lc = new ListeCovoiturageDB();
-        ParseQuery<ListeCovoiturageDB> query = ParseQuery.getQuery(ListeCovoiturageDB.class);
+        ListeCovoiturage lc = new ListeCovoiturage();
+        ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
         query.whereNotEqualTo("idListeCovoiturage", 0);
-        query.findInBackground(new FindCallback<ListeCovoiturageDB>() {
+        query.findInBackground(new FindCallback<ListeCovoiturage>() {
             @Override
-            public void done(List<ListeCovoiturageDB> listeCovoiturage, ParseException e) {
+            public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
+
+                ListView lv_search = (ListView) findViewById(R.id.lv_search);
+                List<String> li_search = new ArrayList<String>();
+                ArrayAdapter<String> aa_search;
+
                 if (e == null) {
                     int i = 0;
-                    for (ListeCovoiturageDB lc : listeCovoiturage) {
+                    for (ListeCovoiturage lc : listeCovoiturage) {
+                        li_search.add(
+                                lc.get("idListeCovoiturage").toString() + " "
+                                        + lc.get("lieudepart").toString() + " "
+                                        + lc.get("lieuarrivee").toString() + " "
+                                        + lc.get("datedepart").toString() + " "
+                                        + lc.get("datearrivee").toString() + " "
+                        );
                         System.out.println(lc.get("idListeCovoiturage") + ": " + lc.get("lieudepart") + " " + lc.get("lieuarrivee") + " " + lc.get("datedepart") + " " + lc.get("datearrivee"));
                     }
                 } else {
                     System.out.println(e.getMessage());
                 }
+
+                aa_search = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, li_search);
+                lv_search.setAdapter(aa_search);
             }
         });
-
+        /*
         ListView lv_search = (ListView) findViewById(R.id.lv_search);
         List<String> li_search = new ArrayList<String>();
-        li_search.add("test");
-        li_search.add("test2");
-        li_search.add("test3");
+        for(int i = 0; i < 20; i++) {
+            li_search.add("test " + ((Integer) i).toString());
+            System.out.println(i);
+        }
         ArrayAdapter<String> aa_search = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, li_search);
         lv_search.setAdapter(aa_search);
+        */
     }
 }
