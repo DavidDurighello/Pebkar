@@ -20,5 +20,11 @@
     <string name="btn_connexion">Se connecter</string>
     <string name="btn_recherche">Rechercher</string>
     <string name="logo_pebkar">Logo Pebkar</string>
-    <string name="title_activity_search">Search</string>
+    <string name="title_activity_search">Rechercher</string>
+
+    <!-- activity_search.xml -->
+    <string name="filtre">Filtre</string>
+    <string name="ville">Ville de départ :</string>
+    <string name="ville_hint">Entrez une ville ici...</string>
+    <string name="valider">Valider</string>
 </resources>
