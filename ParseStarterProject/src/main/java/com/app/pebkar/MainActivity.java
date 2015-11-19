@@ -8,15 +8,19 @@
  */
 package com.app.pebkar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.parse.ParseAnalytics;
 
 
 public class MainActivity extends AppCompatActivity {
+
+  public final static String EXTRA_MESSAGE = "com.app.pebkar.MESSAGE";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+
   }
 
   @Override
@@ -47,4 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
     return super.onOptionsItemSelected(item);
   }
+
+  public void btnRecherche(View view){
+    Intent intent = new Intent(this, Search.class);
+    intent.putExtra(EXTRA_MESSAGE, "Activity Search");
+    startActivity(intent);
+  }
+
 }
