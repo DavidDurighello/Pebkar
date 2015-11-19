@@ -42,7 +42,9 @@ public class Search extends AppCompatActivity {
         ListView lv_search = (ListView) findViewById(R.id.lv_search);
         List<String> li_search = new ArrayList<String>();
         li_search.add("test");
-        ArrayAdapter<String> aa_search = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_search, li_search);
+        li_search.add("test2");
+        li_search.add("test3");
+        ArrayAdapter<String> aa_search = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, li_search);
         lv_search.setAdapter(aa_search);
     }
 }
