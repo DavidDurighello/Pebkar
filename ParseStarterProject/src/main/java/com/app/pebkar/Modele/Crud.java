@@ -1,11 +1,13 @@
 package com.app.pebkar.Modele;
 
+import java.util.List;
+
 /**
  * Created by David Elykx on 19-11-15.
  */
 public interface Crud {
-    public void create() throws Exception;
-    public void read() throws Exception;
-    public void update() throws Exception;
-    public void delete() throws Exception;
+    public void createData() throws Exception;
+    public List readData() throws Exception;
+    public void updateData() throws Exception;
+    public void deleteData() throws Exception;
 }
