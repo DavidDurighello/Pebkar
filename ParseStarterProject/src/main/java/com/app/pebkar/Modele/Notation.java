@@ -1,4 +1,4 @@
-package com.app.pebkar;
+package com.app.pebkar.Modele;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -8,15 +8,15 @@ import com.parse.ParseObject;
  */
 
 @ParseClassName("Notation")
-public class NotationDB extends ParseObject {
+public class Notation extends ParseObject {
     int idNotation;
     float note;
     int nbnotes;
 
-    public NotationDB() {
+    public Notation() {
     }
 
-    public NotationDB(int idNotation, float note, int nbnotes) {
+    public Notation(int idNotation, float note, int nbnotes) {
         this.idNotation = idNotation;
         this.note = note;
         this.nbnotes = nbnotes;

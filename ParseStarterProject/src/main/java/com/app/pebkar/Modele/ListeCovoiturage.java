@@ -1,4 +1,4 @@
-package com.app.pebkar;
+package com.app.pebkar.Modele;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -10,18 +10,18 @@ import java.util.Date;
  */
 
 @ParseClassName("ListeCovoiturage")
-public class ListeCovoiturageDB extends ParseObject {
+public class ListeCovoiturage extends ParseObject {
     int idListeCovoiturage;
     String lieudepart;
     String lieuarrivee;
     Date datedepart;
     Date datearrivee;
 
-    public ListeCovoiturageDB(){
+    public ListeCovoiturage(){
 
     }
 
-    public ListeCovoiturageDB(int idListeCovoiturage, String lieudepart, String lieuarrivee,  Date datedepart, Date datearrivee){
+    public ListeCovoiturage(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
         this.idListeCovoiturage = idListeCovoiturage;
         this.lieudepart = lieudepart;
         this.lieuarrivee = lieuarrivee;

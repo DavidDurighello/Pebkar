@@ -1,4 +1,4 @@
-package com.app.pebkar;
+package com.app.pebkar.Modele;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -8,16 +8,16 @@ import com.parse.ParseObject;
  */
 
 @ParseClassName("Passagers")
-public class PassagersDB extends ParseObject{
+public class Passagers extends ParseObject{
     int idProfil;
     int idListeCovoiturage;
     boolean estConducteur;
 
-    public PassagersDB() {
+    public Passagers() {
 
     }
 
-    public PassagersDB(int idProfil, int idListeCovoiturage, boolean estConducteur) {
+    public Passagers(int idProfil, int idListeCovoiturage, boolean estConducteur) {
         this.idProfil = idProfil;
         this.idListeCovoiturage = idListeCovoiturage;
         this.estConducteur = estConducteur;

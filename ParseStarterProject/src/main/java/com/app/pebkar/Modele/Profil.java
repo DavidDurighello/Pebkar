@@ -1,4 +1,4 @@
-package com.app.pebkar;
+package com.app.pebkar.Modele;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -8,17 +8,17 @@ import com.parse.ParseObject;
  */
 
 @ParseClassName("Profil")
-public class ProfilDB extends ParseObject{
+public class Profil extends ParseObject{
     int idProfil;
     String nom;
     String prenom;
     String adresse;
     String telephone;
 
-    public ProfilDB() {
+    public Profil() {
     }
 
-    public ProfilDB(int idProfil, String nom, String prenom, String adresse, String telephone) {
+    public Profil(int idProfil, String nom, String prenom, String adresse, String telephone) {
         this.idProfil = idProfil;
         this.nom = nom;
         this.prenom = prenom;

@@ -10,6 +10,10 @@ package com.app.pebkar;
 
 import android.app.Application;
 
+import com.app.pebkar.Modele.ListeCovoiturage;
+import com.app.pebkar.Modele.Notation;
+import com.app.pebkar.Modele.Passagers;
+import com.app.pebkar.Modele.Profil;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseObject;
@@ -26,10 +30,10 @@ public class StarterApplication extends Application {
     Parse.enableLocalDatastore(this);
 
     //DBClass
-    ParseObject.registerSubclass(ListeCovoiturageDB.class);
-    ParseObject.registerSubclass(NotationDB.class);
-    ParseObject.registerSubclass(PassagersDB.class);
-    ParseObject.registerSubclass(ProfilDB.class);
+    ParseObject.registerSubclass(ListeCovoiturage.class);
+    ParseObject.registerSubclass(Notation.class);
+    ParseObject.registerSubclass(Passagers.class);
+    ParseObject.registerSubclass(Profil.class);
 
     // Add your initialization code here
     Parse.initialize(this, "fc7IlnwGrW6KgP43o6dHNir9W20xzqEhr94EMVyW","BMclWPRzlY4yn5yR7ZdbyOXkohQVJOIoBnBwfi2I");
