@@ -1,7 +1,6 @@
 package com.app.pebkar.Modele;
 
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -102,6 +101,13 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         return liRead;
     }
 
+    /**
+     * Fallback pour le nouveau readData. On ne filtre pas la recherche ici.
+     * @param liLink
+     * @param arrayAdapter
+     * @return
+     * @throws Exception
+     */
     public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter) throws Exception {
         return readData(liLink, arrayAdapter, "");
     }
@@ -118,8 +124,6 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
 
         query.orderByAscending("datedepart");
 
-
-        //query.findInBackground(new VoyageCallBack(liLink, arrayAdapter));
         query.findInBackground(new FindCallback<ListeCovoiturage>() {
             @Override
             public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
