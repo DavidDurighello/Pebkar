@@ -72,11 +72,41 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
 
     @Override
     public void updateData() throws Exception {
-
+        ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
+        query.whereEqualTo("idListeCovoiturage", idListeCovoiturage);
+        query.findInBackground(new FindCallback<ListeCovoiturage>() {
+            @Override
+            public void done(List<ListeCovoiturage> objects, ParseException e) {
+                if (e == null) {
+                    for(ParseObject object:objects){
+                        object.put("lieudepart",lieudepart);
+                        object.put("lieuarrivee", lieuarrivee);
+                        object.put("datedepart", datedepart);
+                        object.put("datearrivee", datearrivee);
+                        object.saveInBackground();
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
     }
 
-    @Override
+        @Override
     public void deleteData() throws Exception {
-
-    }
+            ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
+            query.whereEqualTo("idListeCovoiturage", idListeCovoiturage);
+            query.findInBackground(new FindCallback<ListeCovoiturage>() {
+                @Override
+                public void done(List<ListeCovoiturage> objects, ParseException e) {
+                    if(e == null){
+                        for(ParseObject object:objects){
+                            object.deleteInBackground();
+                        }
+                    } else {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            });
+        }
 }
