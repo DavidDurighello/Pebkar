@@ -1,5 +1,8 @@
 package com.app.pebkar.Modele;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -18,7 +21,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
     }
 
     public ListeCovoiturageDB(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
-        super(idListeCovoiturage,lieudepart, lieuarrivee, datedepart, datearrivee);
+        super(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
     }
 
     @Override
@@ -98,6 +101,56 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         });
         return liRead;
     }
+
+    public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter) throws Exception {
+        return readData(liLink, arrayAdapter, "");
+    }
+
+    public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter, String lieudepart) throws Exception {
+        final List<String> liRead = new ArrayList<>();
+
+        ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
+
+        if(!lieudepart.isEmpty()) {
+            query.whereMatches("lieudepart", lieudepart);
+            query.whereMatches("lieudepart", lieudepart.toUpperCase());
+        }
+
+        query.orderByAscending("datedepart");
+
+
+        //query.findInBackground(new VoyageCallBack(liLink, arrayAdapter));
+        query.findInBackground(new FindCallback<ListeCovoiturage>() {
+            @Override
+            public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
+
+                if (e == null) {
+                    for (ListeCovoiturage lc : listeCovoiturage) {
+                        liRead.add(
+                                lc.get("idListeCovoiturage").toString() + " "
+                                        + lc.get("lieudepart").toString() + " "
+                                        + lc.get("lieuarrivee").toString() + " "
+                                        + lc.get("datedepart").toString() + " "
+                                        + lc.get("datearrivee").toString() + " "
+                        );
+                        System.out.println("[DEBUG] rD " + lc.get("idListeCovoiturage") + ": " + lc.get("lieudepart") + " " + lc.get("lieuarrivee") + " " + lc.get("datedepart") + " " + lc.get("datearrivee"));
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+
+                liLink.clear();
+                for (String s : liRead) {
+                    liLink.add(s);
+                }
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+        return liLink;
+    }
+
+
+
 
     @Override
     public void updateData() throws Exception {

@@ -17,9 +17,9 @@ import java.util.List;
 public class Search extends AppCompatActivity {
 
     private ListView listViewSearch;
-    private List<String> listSearch;
     private ListeCovoiturageDB listeCovoiturageDB;
-    private ArrayAdapter<String> arrayAdapterSearch;
+    public List<String> listSearch;
+    public ArrayAdapter<String> arrayAdapterSearch;
 
 
     @Override
@@ -40,6 +40,8 @@ public class Search extends AppCompatActivity {
      * Méthode utilisée également pour la recherche
      */
     protected void chargerVoyages() {
+        List<String> tempList = new ArrayList<>();
+
         listeCovoiturageDB = new ListeCovoiturageDB();
         String rech_ville = ((EditText) findViewById(R.id.et_ville)).getText().toString(); // Ville recherchée
         System.out.println("[DEBUG] rech_ville : " + rech_ville);
@@ -47,18 +49,22 @@ public class Search extends AppCompatActivity {
         try {
 
             if(rech_ville.isEmpty()) {
-                listSearch = listeCovoiturageDB.readData();
+                //listSearch = listeCovoiturageDB.readData();
+                listSearch.add("Test1");
+                listeCovoiturageDB.readData(listSearch, arrayAdapterSearch);
+
+                listSearch.add("Test2");
             }
             else {
-                listSearch = listeCovoiturageDB.readData(rech_ville);
+                listSearch = listeCovoiturageDB.readData(listSearch, arrayAdapterSearch, rech_ville);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        arrayAdapterSearch = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listSearch);
-        listViewSearch.setAdapter(arrayAdapterSearch);
-        listViewSearch.invalidateViews();
+        //arrayAdapterSearch = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listSearch);
+        //listViewSearch.setAdapter(arrayAdapterSearch);
+        //arrayAdapterSearch.notifyDataSetChanged();
     }
 
     /*
@@ -84,5 +90,9 @@ public class Search extends AppCompatActivity {
 
     public void btn_filtre(View view) {
         chargerVoyages();
+    }
+
+    public void btn_count(View view) {
+        System.out.println("[DEBUG] List count : " + listSearch.size());
     }
 }
