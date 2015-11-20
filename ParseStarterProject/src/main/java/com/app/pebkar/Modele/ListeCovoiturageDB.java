@@ -27,12 +27,12 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         getNewId.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                if(e==null){
+                if (e == null) {
                     ParseObject parseObject = objects.get(0);
-                    int idListeCovoiturage = parseObject.getInt("idListeCovoiturage");
-                    parseObject.increment("idListeCovoiturage");
+                    int idListeCovoiturage = parseObject.getInt("ListeCovoiturage");
+                    parseObject.increment("ListeCovoiturage");
                     parseObject.saveInBackground();
-                    ListeCovoiturage listeCovoiturage = new ListeCovoiturage(idListeCovoiturage,lieudepart,lieuarrivee,datedepart,datearrivee);
+                    ListeCovoiturage listeCovoiturage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
                     listeCovoiturage.saveInBackground();
                 } else {
                     System.out.println(e.getMessage());
@@ -46,12 +46,41 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         final List<String> liRead = new ArrayList<>();
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
         query.whereNotEqualTo("idListeCovoiturage", 0);
+        query.orderByAscending("datedepart");
         query.findInBackground(new FindCallback<ListeCovoiturage>() {
             @Override
             public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
 
                 if (e == null) {
-                    int i = 0;
+                    for (ListeCovoiturage lc : listeCovoiturage) {
+                        liRead.add(
+                                lc.get("idListeCovoiturage").toString() + " "
+                                        + lc.get("lieudepart").toString() + " "
+                                        + lc.get("lieuarrivee").toString() + " "
+                                        + lc.get("datedepart").toString() + " "
+                                        + lc.get("datearrivee").toString() + " "
+                        );
+                        System.out.println(lc.get("idListeCovoiturage") + ": " + lc.get("lieudepart") + " " + lc.get("lieuarrivee") + " " + lc.get("datedepart") + " " + lc.get("datearrivee"));
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+        return liRead;
+    }
+
+    public List readData(String lieudepart) throws Exception {
+        final List<String> liRead = new ArrayList<>();
+        ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
+        query.whereMatches("lieudepart", lieudepart);
+        query.whereMatches("lieudepart", lieudepart.toUpperCase());
+        query.orderByAscending("datedepart");
+        query.findInBackground(new FindCallback<ListeCovoiturage>() {
+            @Override
+            public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
+
+                if (e == null) {
                     for (ListeCovoiturage lc : listeCovoiturage) {
                         liRead.add(
                                 lc.get("idListeCovoiturage").toString() + " "
