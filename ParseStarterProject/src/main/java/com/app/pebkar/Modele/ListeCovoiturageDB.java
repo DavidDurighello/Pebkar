@@ -1,7 +1,9 @@
 package com.app.pebkar.Modele;
 
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import com.app.pebkar.Tools.StrTools;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -127,7 +129,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
 
         if(!lieudepart.isEmpty()) {
             //query.whereContains("lieudepart", lieudepart); // Fonctionne mais est sensible à la casse
-            query.whereMatches("lieudepart", lieudepart, "i"); // Recherche non sensible à la casse
+            query.whereMatches("lieudepartASCII", StrTools.removeAccent(lieudepart), "i"); // Recherche non sensible à la casse
         }
 
         query.orderByAscending("datedepart");
@@ -157,6 +159,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
                 }
 
                 // Si aucune donnée n'a été chargée
+                System.out.println("[DEBUG] La recherche a renvoyé " + liLink.size() + " résultats.");
                 if(liLink.size() == 0) liLink.add("La recherche n'a renvoyé aucun résultat.");
 
                 // Rafraîchir la liste sur l'UI
@@ -165,9 +168,6 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         });
         return liLink;
     }
-
-
-
 
     @Override
     public void updateData() throws Exception {
@@ -191,7 +191,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         });
     }
 
-        @Override
+    @Override
     public void deleteData() throws Exception {
             ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
             query.whereEqualTo("idListeCovoiturage", idListeCovoiturage);
