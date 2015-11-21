@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.pebkar.Modele.ListeCovoiturageDB;
 
@@ -40,59 +41,35 @@ public class Search extends AppCompatActivity {
      * Méthode utilisée également pour la recherche
      */
     protected void chargerVoyages() {
-        List<String> tempList = new ArrayList<>();
-
         listeCovoiturageDB = new ListeCovoiturageDB();
         String rech_ville = ((EditText) findViewById(R.id.et_ville)).getText().toString(); // Ville recherchée
         System.out.println("[DEBUG] rech_ville : " + rech_ville);
 
         try {
+            listSearch.clear();
+            listSearch.add("Chargement des données en cours...");
+            arrayAdapterSearch.notifyDataSetChanged();
 
             if(rech_ville.isEmpty()) {
-                //listSearch = listeCovoiturageDB.readData();
-                listSearch.add("Test1");
                 listeCovoiturageDB.readData(listSearch, arrayAdapterSearch);
-
-                listSearch.add("Test2");
             }
             else {
                 listSearch = listeCovoiturageDB.readData(listSearch, arrayAdapterSearch, rech_ville);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            listSearch.clear();
+            listSearch.add("Erreur lors du chargement des données");
+            arrayAdapterSearch.notifyDataSetChanged();
 
-        //arrayAdapterSearch = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listSearch);
-        //listViewSearch.setAdapter(arrayAdapterSearch);
-        //arrayAdapterSearch.notifyDataSetChanged();
-    }
-
-    /*
-    public void btn_filtre(View view){
-        EditText editTextSearch = (EditText) findViewById(R.id.et_ville);
-        ListeCovoiturageDB listeCovoiturageDB = new ListeCovoiturageDB();
-        ListView listViewSearch = (ListView) findViewById(R.id.lv_search);
-        List<String> listSearch = null;
-        try {
-            listSearch = listeCovoiturageDB.readData(editTextSearch.getText().toString());
-            for (String lc:listSearch) {
-                System.out.println(lc);
-
-            }
-            ArrayAdapter<String> arrayAdapterSearch;
-            arrayAdapterSearch = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, listSearch);
-            listViewSearch.setAdapter(arrayAdapterSearch);
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    */
 
     public void btn_filtre(View view) {
         chargerVoyages();
     }
 
     public void btn_count(View view) {
-        System.out.println("[DEBUG] List count : " + listSearch.size());
+        Toast.makeText(this, "[DEBUG] List count : " + listSearch.size(), Toast.LENGTH_SHORT).show();
     }
 }

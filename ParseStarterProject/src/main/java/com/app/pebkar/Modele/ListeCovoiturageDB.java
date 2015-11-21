@@ -112,14 +112,22 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         return readData(liLink, arrayAdapter, "");
     }
 
+    /**
+     * Récupère la liste des covoiturages disponibles, avec ou sans filtre et mets à jour le listview lié à la table après la récup des données en background.
+     * @param liLink
+     * @param arrayAdapter
+     * @param lieudepart
+     * @return
+     * @throws Exception
+     */
     public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter, String lieudepart) throws Exception {
         final List<String> liRead = new ArrayList<>();
 
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
 
         if(!lieudepart.isEmpty()) {
-            query.whereMatches("lieudepart", lieudepart);
-            query.whereMatches("lieudepart", lieudepart.toUpperCase());
+            //query.whereContains("lieudepart", lieudepart); // Fonctionne mais est sensible à la casse
+            query.whereMatches("lieudepart", lieudepart, "i"); // Recherche non sensible à la casse
         }
 
         query.orderByAscending("datedepart");
@@ -147,6 +155,11 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
                 for (String s : liRead) {
                     liLink.add(s);
                 }
+
+                // Si aucune donnée n'a été chargée
+                if(liLink.size() == 0) liLink.add("La recherche n'a renvoyé aucun résultat.");
+
+                // Rafraîchir la liste sur l'UI
                 arrayAdapter.notifyDataSetChanged();
             }
         });
