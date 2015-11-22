@@ -21,6 +21,13 @@ public class ListeCovoiturage extends ParseObject {
 
     }
 
+    public ListeCovoiturage(String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee) {
+        this.lieudepart = lieudepart;
+        this.lieuarrivee = lieuarrivee;
+        this.datedepart = datedepart;
+        this.datearrivee = datearrivee;
+    }
+
     public ListeCovoiturage(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
         this.idListeCovoiturage = idListeCovoiturage;
         this.lieudepart = lieudepart;

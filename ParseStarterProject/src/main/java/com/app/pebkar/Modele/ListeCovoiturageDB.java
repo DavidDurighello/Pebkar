@@ -21,6 +21,10 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
     public ListeCovoiturageDB() {
     }
 
+    public ListeCovoiturageDB(String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
+        super(lieudepart, lieuarrivee, datedepart, datearrivee);
+    }
+
     public ListeCovoiturageDB(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
         super(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
     }
