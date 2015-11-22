@@ -15,6 +15,7 @@ import com.app.pebkar.Modele.ListeCovoiturageDB;
 import com.app.pebkar.Modele.Notation;
 import com.app.pebkar.Modele.Passagers;
 import com.app.pebkar.Modele.Profil;
+import com.app.pebkar.Modele.TableSeq;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseObject;
@@ -31,6 +32,7 @@ public class StarterApplication extends Application {
     Parse.enableLocalDatastore(this);
 
     //DBClass
+    ParseObject.registerSubclass(TableSeq.class);
     ParseObject.registerSubclass(ListeCovoiturageDB.class);
     ParseObject.registerSubclass(ListeCovoiturage.class);
     ParseObject.registerSubclass(Notation.class);

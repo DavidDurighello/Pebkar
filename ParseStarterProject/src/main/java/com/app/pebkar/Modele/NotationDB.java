@@ -22,11 +22,11 @@ public class NotationDB extends Notation implements Crud {
 
     @Override
     public void createData() throws Exception {
-        ParseQuery<ParseObject> getNewId = ParseQuery.getQuery("TableSeq");
+        ParseQuery<TableSeq> getNewId = ParseQuery.getQuery(TableSeq.class);
         getNewId.whereEqualTo("NomTable", "Notation");
-        getNewId.findInBackground(new FindCallback<ParseObject>() {
+        getNewId.findInBackground(new FindCallback<TableSeq>() {
             @Override
-            public void done(List<ParseObject> objects, ParseException e) {
+            public void done(List<TableSeq> objects, ParseException e) {
                 if (e == null) {
                     ParseObject parseObject = objects.get(0);
                     int idNotation = parseObject.getInt("idseq");

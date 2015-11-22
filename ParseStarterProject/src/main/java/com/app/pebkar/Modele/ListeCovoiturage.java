@@ -26,6 +26,10 @@ public class ListeCovoiturage extends ParseObject {
         this.lieuarrivee = lieuarrivee;
         this.datedepart = datedepart;
         this.datearrivee = datearrivee;
+        put("lieudepart",lieudepart);
+        put("lieuarrivee",lieuarrivee);
+        put("datedepart",datedepart);
+        put("datearrivee",datearrivee);
     }
 
     public ListeCovoiturage(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
