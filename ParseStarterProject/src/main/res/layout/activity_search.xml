@@ -21,6 +21,25 @@
         android:layout_below="@+id/tv_search"
         android:textSize="20sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ville d'arrivée : "
+        android:id="@+id/tv_ville2"
+        android:textSize="20sp"
+        android:layout_below="@+id/et_ville"
+        android:layout_alignBaseline="@+id/et_ville2"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Entrez une ville ici..."
+        android:id="@+id/et_ville2"
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/tv_ville2"
+        android:layout_below="@+id/et_ville" />
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -37,7 +56,7 @@
         android:layout_height="wrap_content"
         android:text="@string/valider"
         android:id="@+id/bt_filtre"
-        android:layout_below="@+id/et_ville"
+        android:layout_below="@+id/et_ville2"
         android:layout_centerHorizontal="true"
         android:onClick="btn_filtre" />
 
@@ -46,15 +65,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/lv_search"
         android:layout_below="@+id/bt_filtre"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Count !"
-        android:id="@+id/bt_count"
-        android:layout_above="@+id/lv_search"
-        android:layout_toRightOf="@+id/bt_filtre"
-        android:layout_toEndOf="@+id/bt_filtre"
-        android:onClick="btn_count" />
 
 </RelativeLayout>

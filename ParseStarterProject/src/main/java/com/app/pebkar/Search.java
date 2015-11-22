@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.pebkar.Modele.ListeCovoiturage;
 import com.app.pebkar.Modele.ListeCovoiturageDB;
 
 import java.util.ArrayList;
@@ -41,22 +41,21 @@ public class Search extends AppCompatActivity {
      * Méthode utilisée également pour la recherche
      */
     protected void chargerVoyages() {
+        ListeCovoiturage filtre = new ListeCovoiturageDB();
         listeCovoiturageDB = new ListeCovoiturageDB();
-        String rech_ville = ((EditText) findViewById(R.id.et_ville)).getText().toString(); // Ville recherchée
-        System.out.println("[DEBUG] rech_ville : " + rech_ville);
+
+        filtre.setLieudepart(((EditText) findViewById(R.id.et_ville)).getText().toString()); // Ville de départ recherchée
+        filtre.setLieuarrivee(((EditText) findViewById(R.id.et_ville2)).getText().toString());
+        System.out.println("[DEBUG] Filtre : " + filtre.toString());
 
         try {
             listSearch.clear();
             listSearch.add("Chargement des données en cours...");
             arrayAdapterSearch.notifyDataSetChanged();
 
-            if(rech_ville.isEmpty()) {
-                listeCovoiturageDB.readData(listSearch, arrayAdapterSearch);
-            }
-            else {
-                listSearch = listeCovoiturageDB.readData(listSearch, arrayAdapterSearch, rech_ville);
-            }
-        } catch (Exception e) {
+            listSearch = listeCovoiturageDB.readData(listSearch, arrayAdapterSearch, filtre);
+        }
+        catch (Exception e) {
             listSearch.clear();
             listSearch.add("Erreur lors du chargement des données");
             arrayAdapterSearch.notifyDataSetChanged();
@@ -65,11 +64,11 @@ public class Search extends AppCompatActivity {
         }
     }
 
+    /**
+     * Recharge la liste avec les nouveaux critères de recherche
+     * @param view
+     */
     public void btn_filtre(View view) {
         chargerVoyages();
-    }
-
-    public void btn_count(View view) {
-        Toast.makeText(this, "[DEBUG] List count : " + listSearch.size(), Toast.LENGTH_SHORT).show();
     }
 }

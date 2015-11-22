@@ -11,7 +11,7 @@ import java.util.Date;
 
 @ParseClassName("ListeCovoiturage")
 public class ListeCovoiturage extends ParseObject {
-    int idListeCovoiturage;
+    Integer idListeCovoiturage;
     String lieudepart;
     String lieuarrivee;
     Date datedepart;
@@ -77,5 +77,25 @@ public class ListeCovoiturage extends ParseObject {
     public void setDatearrivee(Date datearrivee) {
         this.datearrivee = datearrivee;
         put("datearrivee",datearrivee);
+    }
+
+    @Override
+    public String toString() {
+        return "ListeCovoiturage{" +
+                "idListeCovoiturage=" + idListeCovoiturage +
+                ", lieudepart='" + lieudepart + '\'' +
+                ", lieuarrivee='" + lieuarrivee + '\'' +
+                ", datedepart=" + datedepart +
+                ", datearrivee=" + datearrivee +
+                '}';
+    }
+
+    /**
+     * Vérifie si l'objet contient quelque chose
+     * isEmpty a été utilisé sur les strings car "" n'est pas null
+     * @return
+     */
+    public boolean isEmpty() {
+        return (idListeCovoiturage == null && lieudepart.isEmpty() && lieuarrivee.isEmpty() && datedepart == null && datearrivee == null);
     }
 }

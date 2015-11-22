@@ -104,36 +104,24 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
     }
 
     /**
-     * Fallback pour le nouveau readData. On ne filtre pas la recherche ici.
-     * @param liLink
-     * @param arrayAdapter
-     * @return
-     * @throws Exception
-     */
-    public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter) throws Exception {
-        return readData(liLink, arrayAdapter, "");
-    }
-
-    /**
      * Récupère la liste des covoiturages disponibles, avec ou sans filtre et mets à jour le listview lié à la table après la récup des données en background.
      * @param liLink
      * @param arrayAdapter
-     * @param lieudepart
+     * @param filtre
      * @return
      * @throws Exception
      */
-    public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter, String lieudepart) throws Exception {
+    public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter, ListeCovoiturage filtre) throws Exception {
         final List<String> liRead = new ArrayList<>();
-
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
 
-        if(!lieudepart.isEmpty()) {
+        if(!filtre.isEmpty()) {
             //query.whereContains("lieudepart", lieudepart); // Fonctionne mais est sensible à la casse
-            query.whereMatches("lieudepartASCII", StrTools.removeAccent(lieudepart), "i"); // Recherche non sensible à la casse
+            query.whereMatches("lieudepartASCII", StrTools.removeAccent(filtre.getLieudepart()), "i"); // le "i" signifie : Recherche non sensible à la casse
+            query.whereMatches("lieuarriveeASCII", StrTools.removeAccent(filtre.getLieuarrivee()), "i");
         }
 
         query.orderByAscending("datedepart");
-
         query.findInBackground(new FindCallback<ListeCovoiturage>() {
             @Override
             public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
@@ -153,6 +141,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
                     System.out.println(e.getMessage());
                 }
 
+                // On vide la liste en cours pour la remplir des nouvelles données
                 liLink.clear();
                 for (String s : liRead) {
                     liLink.add(s);
@@ -160,7 +149,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
 
                 // Si aucune donnée n'a été chargée
                 System.out.println("[DEBUG] La recherche a renvoyé " + liLink.size() + " résultats.");
-                if(liLink.size() == 0) liLink.add("La recherche n'a renvoyé aucun résultat.");
+                if (liLink.size() == 0) liLink.add("La recherche n'a renvoyé aucun résultat.");
 
                 // Rafraîchir la liste sur l'UI
                 arrayAdapter.notifyDataSetChanged();
