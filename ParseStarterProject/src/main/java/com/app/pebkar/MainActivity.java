@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.app.pebkar.Test.TestListeCovoiturage;
 import com.parse.ParseAnalytics;
 
 
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
+      return true;
+    }
+    if(id == R.id.action_testCRUD) {
+      startActivity(new Intent(this, TestListeCovoiturage.class));
       return true;
     }
 
