@@ -32,13 +32,14 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
     @Override
     public void createData() throws Exception {
         ParseQuery<ParseObject> getNewId = ParseQuery.getQuery("TableSeq");
+        getNewId.whereEqualTo("NomTable", "ListeCovoiturage");
         getNewId.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     ParseObject parseObject = objects.get(0);
-                    int idListeCovoiturage = parseObject.getInt("ListeCovoiturage");
-                    parseObject.increment("ListeCovoiturage");
+                    int idListeCovoiturage = parseObject.getInt("idseq");
+                    parseObject.increment("idseq");
                     parseObject.saveInBackground();
                     ListeCovoiturage listeCovoiturage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
                     listeCovoiturage.saveInBackground();

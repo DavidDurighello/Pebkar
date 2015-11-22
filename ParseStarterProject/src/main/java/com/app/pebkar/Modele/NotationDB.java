@@ -23,15 +23,16 @@ public class NotationDB extends Notation implements Crud {
     @Override
     public void createData() throws Exception {
         ParseQuery<ParseObject> getNewId = ParseQuery.getQuery("TableSeq");
+        getNewId.whereEqualTo("NomTable", "Notation");
         getNewId.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                if(e==null){
+                if (e == null) {
                     ParseObject parseObject = objects.get(0);
-                    int idNotation = parseObject.getInt("Notation");
-                    parseObject.increment("Notation");
+                    int idNotation = parseObject.getInt("idseq");
+                    parseObject.increment("idseq");
                     parseObject.saveInBackground();
-                    Notation notation = new Notation(idNotation, note, nbnotes);
+                    Notation notation = new Notation(idNotation, note ,nbnotes);
                     notation.saveInBackground();
                 } else {
                     System.out.println(e.getMessage());
@@ -68,11 +69,63 @@ public class NotationDB extends Notation implements Crud {
 
     @Override
     public void updateData() throws Exception {
+        ParseQuery<Notation> query = ParseQuery.getQuery(Notation.class);
+        query.whereEqualTo("idNotation", idNotation);
+        query.findInBackground(new FindCallback<Notation>() {
+            @Override
+            public void done(List<Notation> objects, ParseException e) {
+                if (e == null) {
+                    for(ParseObject object:objects){
+                        object.put("note",note);
+                        object.put("nbnotes", nbnotes);
+                        object.saveInBackground();
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
 
+    }
+
+    public void ajoutNote(final float nouvelleNote) throws Exception {
+        ParseQuery<Notation> query = ParseQuery.getQuery(Notation.class);
+        query.whereEqualTo("idNotation", idNotation);
+        query.findInBackground(new FindCallback<Notation>() {
+            @Override
+            public void done(List<Notation> objects, ParseException e) {
+                if (e == null) {
+                    for(ParseObject object:objects){
+                        float ancienneNote = note;
+                        int nbnotesFinales = nbnotes + 1;
+                        float notefinale = (ancienneNote * nbnotes + nouvelleNote)/nbnotesFinales;
+
+                        object.put("note",notefinale);
+                        object.put("nbnotes", nbnotesFinales);
+                        object.saveInBackground();
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
     }
 
     @Override
     public void deleteData() throws Exception {
-
+        ParseQuery<Notation> query = ParseQuery.getQuery(Notation.class);
+        query.whereEqualTo("idNotation", idNotation);
+        query.findInBackground(new FindCallback<Notation>() {
+            @Override
+            public void done(List<Notation> objects, ParseException e) {
+                if(e == null){
+                    for(ParseObject object:objects){
+                        object.deleteInBackground();
+                    }
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
     }
 }
