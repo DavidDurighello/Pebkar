@@ -27,17 +27,20 @@ public class TestListeCovoiturage extends AppCompatActivity {
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
         lcDB1 = new ListeCovoiturageDB();
-        lcDB2 = new ListeCovoiturageDB();
         Date datedeparttest = new Date();
         Date datearriveetest = new Date();
         datearriveetest.setTime(datedeparttest.getTime() + 3600000);
 
         lcDB1 = new ListeCovoiturageDB("lieudeptest","lieuarriveetest",datedeparttest,datearriveetest);
         try {
+            //lcDB1.save();
             lcDB1.createData();
+            lcDB2 = new ListeCovoiturageDB();
+
         }
         catch(Exception e) {
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT);
+            System.out.println("[DEBUG] Erreur : " + e.getLocalizedMessage());
         }
 
         /*

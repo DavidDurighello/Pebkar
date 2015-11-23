@@ -31,6 +31,40 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
 
     @Override
     public void createData() throws Exception {
+        //ParseQuery<TableSeq> getNewId = ParseQuery.getQuery(TableSeq.class);
+        System.out.println("[DEBUG] DEBUT");
+        TableSeqDB tableSeqDB = new TableSeqDB();
+        Integer idSeq;
+
+        tableSeqDB = (TableSeqDB) tableSeqDB.readData("NomTable").get(0);
+        idSeq = tableSeqDB.getInt("idseq");
+        tableSeqDB.increment("idseq");
+        tableSeqDB.saveInBackground();
+        System.out.println("[DEBUG] idSeq : " + idSeq);
+
+        ListeCovoiturageDB listeCovoiturageDB = new ListeCovoiturageDB(idSeq, lieudepart, lieuarrivee, datedepart, datearrivee);
+        System.out.println(listeCovoiturageDB.toString());
+        listeCovoiturageDB.saveInBackground();
+        System.out.println("[DEBUG] FIN");
+
+        /*getNewId.whereEqualTo("NomTable", "ListeCovoiturage");
+        getNewId.findInBackground(new FindCallback<TableSeq>() {
+            @Override
+            public void done(List<TableSeq> objects, ParseException e) {
+                if (e == null) {
+                    TableSeq seq = objects.get(0);
+                    Integer idListeCovoiturage = seq.getInt("idseq");
+                    seq.increment("idseq");
+                    seq.saveInBackground();
+                    ListeCovoiturage listeCovoiturage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
+                    listeCovoiturage.saveInBackground();
+                } else {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });*/
+
+        /*
         ParseQuery<TableSeq> getNewId = ParseQuery.getQuery(TableSeq.class);
         getNewId.whereEqualTo("NomTable", "ListeCovoiturage");
         getNewId.findInBackground(new FindCallback<TableSeq>() {
@@ -48,6 +82,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
                 }
             }
         });
+        */
     }
 
     @Override
