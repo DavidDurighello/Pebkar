@@ -41,7 +41,7 @@ public class Search extends AppCompatActivity {
      * Méthode utilisée également pour la recherche
      */
     protected void chargerVoyages() {
-        ListeCovoiturage filtre = new ListeCovoiturageDB();
+        ListeCovoiturage filtre = new ListeCovoiturage();
         listeCovoiturageDB = new ListeCovoiturageDB();
 
         filtre.setLieudepart(((EditText) findViewById(R.id.et_ville)).getText().toString()); // Ville de départ recherchée

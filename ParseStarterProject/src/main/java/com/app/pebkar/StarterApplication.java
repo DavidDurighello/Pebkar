@@ -33,7 +33,7 @@ public class StarterApplication extends Application {
 
     //DBClass
     ParseObject.registerSubclass(TableSeq.class);
-    ParseObject.registerSubclass(ListeCovoiturageDB.class);
+    //ParseObject.registerSubclass(ListeCovoiturageDB.class);
     ParseObject.registerSubclass(ListeCovoiturage.class);
     ParseObject.registerSubclass(Notation.class);
     ParseObject.registerSubclass(Passagers.class);

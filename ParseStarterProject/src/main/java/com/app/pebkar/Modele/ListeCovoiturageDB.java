@@ -16,73 +16,71 @@ import java.util.List;
 /**
  * Created by David Elykx on 19-11-15.
  */
-public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
+public class ListeCovoiturageDB implements Crud {
+    private ListeCovoiturage voyage;
 
     public ListeCovoiturageDB() {
     }
 
+    public ListeCovoiturageDB(ListeCovoiturage voyage) {
+        this.voyage = voyage;
+    }
+
     public ListeCovoiturageDB(String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
-        super(lieudepart, lieuarrivee, datedepart, datearrivee);
+        this.voyage = new ListeCovoiturage(lieudepart, lieuarrivee, datedepart, datearrivee);
     }
 
     public ListeCovoiturageDB(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
-        super(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
+        this.voyage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
+    }
+
+    public void saveInBackground() {
+        this.voyage.saveInBackground();
+    }
+
+    public ListeCovoiturage getVoyage() {
+        return voyage;
+    }
+
+    public void setVoyage(ListeCovoiturage voyage) {
+        this.voyage = voyage;
+    }
+
+    /**
+     * Vérifie si deux voyages sont les mêmes
+     * @param other
+     * @return
+     */
+    public boolean equals(ListeCovoiturageDB other) {
+        return (
+                this.voyage.getIdListeCovoiturage() == other.getVoyage().getIdListeCovoiturage() &&
+                this.voyage.getLieudepart().equals(other.getVoyage().getLieudepart()) &&
+                this.voyage.getLieuarrivee().equals(other.getVoyage().getLieuarrivee())
+        );
     }
 
     @Override
     public void createData() throws Exception {
-        //ParseQuery<TableSeq> getNewId = ParseQuery.getQuery(TableSeq.class);
-        System.out.println("[DEBUG] DEBUT");
         TableSeqDB tableSeqDB = new TableSeqDB();
+        List<TableSeq> Aseq; // Pas mouillé
+        TableSeq seq;
         Integer idSeq;
 
-        tableSeqDB = (TableSeqDB) tableSeqDB.readData("NomTable").get(0);
-        idSeq = tableSeqDB.getInt("idseq");
-        tableSeqDB.increment("idseq");
-        tableSeqDB.saveInBackground();
-        System.out.println("[DEBUG] idSeq : " + idSeq);
+        Aseq = tableSeqDB.readData("ListeCovoiturage");
+        //System.out.println("[DEBUG] Aseq size : " + Aseq.size());
+        //System.out.println("[DEBUG] Aseq print : " + Aseq.toString());
 
-        ListeCovoiturageDB listeCovoiturageDB = new ListeCovoiturageDB(idSeq, lieudepart, lieuarrivee, datedepart, datearrivee);
+        seq = Aseq.get(0);
+        idSeq = seq.getInt("idseq");
+        seq.increment("idseq");
+        seq.saveInBackground();
+        //System.out.println("[DEBUG] idSeq : " + idSeq);
+        this.voyage.setIdListeCovoiturage(idSeq);
+
+
+        ListeCovoiturageDB listeCovoiturageDB = new ListeCovoiturageDB(voyage);
         System.out.println(listeCovoiturageDB.toString());
         listeCovoiturageDB.saveInBackground();
-        System.out.println("[DEBUG] FIN");
-
-        /*getNewId.whereEqualTo("NomTable", "ListeCovoiturage");
-        getNewId.findInBackground(new FindCallback<TableSeq>() {
-            @Override
-            public void done(List<TableSeq> objects, ParseException e) {
-                if (e == null) {
-                    TableSeq seq = objects.get(0);
-                    Integer idListeCovoiturage = seq.getInt("idseq");
-                    seq.increment("idseq");
-                    seq.saveInBackground();
-                    ListeCovoiturage listeCovoiturage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
-                    listeCovoiturage.saveInBackground();
-                } else {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });*/
-
-        /*
-        ParseQuery<TableSeq> getNewId = ParseQuery.getQuery(TableSeq.class);
-        getNewId.whereEqualTo("NomTable", "ListeCovoiturage");
-        getNewId.findInBackground(new FindCallback<TableSeq>() {
-            @Override
-            public void done(List<TableSeq> objects, ParseException e) {
-                if (e == null) {
-                    ParseObject parseObject = objects.get(0);
-                    int idListeCovoiturage = parseObject.getInt("idseq");
-                    parseObject.increment("idseq");
-                    parseObject.saveInBackground();
-                    ListeCovoiturage listeCovoiturage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
-                    listeCovoiturage.saveInBackground();
-                } else {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
-        */
     }
 
     @Override
@@ -114,33 +112,22 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
         return liRead;
     }
 
-    public List readData(String lieudepart) throws Exception {
-        final List<String> liRead = new ArrayList<>();
+    /**
+     * Va remplir l'attribut ListeCovoiturage (objet voyage) de cet objet grâce à l'ID reçu
+     * @param id
+     * @throws Exception
+     */
+    public void fillDataFromFilter(Integer id) throws Exception {
+        List<ListeCovoiturage> result;
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
-        query.whereMatches("lieudepart", lieudepart);
-        query.whereMatches("lieudepart", lieudepart.toUpperCase());
-        query.orderByAscending("datedepart");
-        query.findInBackground(new FindCallback<ListeCovoiturage>() {
-            @Override
-            public void done(List<ListeCovoiturage> listeCovoiturage, ParseException e) {
+        query.whereEqualTo("idListeCovoiturage", id);
 
-                if (e == null) {
-                    for (ListeCovoiturage lc : listeCovoiturage) {
-                        liRead.add(
-                                lc.get("idListeCovoiturage").toString() + " "
-                                        + lc.get("lieudepart").toString() + " "
-                                        + lc.get("lieuarrivee").toString() + " "
-                                        + lc.get("datedepart").toString() + " "
-                                        + lc.get("datearrivee").toString() + " "
-                        );
-                        System.out.println(lc.get("idListeCovoiturage") + ": " + lc.get("lieudepart") + " " + lc.get("lieuarrivee") + " " + lc.get("datedepart") + " " + lc.get("datearrivee"));
-                    }
-                } else {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
-        return liRead;
+        result = query.find();
+        try {
+            this.voyage = result.get(0); // On tente de récupérer l'élément
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -200,6 +187,7 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
 
     @Override
     public void updateData() throws Exception {
+        /*
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
         query.whereEqualTo("idListeCovoiturage", idListeCovoiturage);
         query.findInBackground(new FindCallback<ListeCovoiturage>() {
@@ -218,23 +206,27 @@ public class ListeCovoiturageDB extends ListeCovoiturage implements Crud {
                 }
             }
         });
+        */
     }
 
     @Override
     public void deleteData() throws Exception {
-            ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
-            query.whereEqualTo("idListeCovoiturage", idListeCovoiturage);
-            query.findInBackground(new FindCallback<ListeCovoiturage>() {
-                @Override
-                public void done(List<ListeCovoiturage> objects, ParseException e) {
-                    if(e == null){
-                        for(ParseObject object:objects){
-                            object.deleteInBackground();
-                        }
-                    } else {
-                        System.out.println(e.getMessage());
+
+        /*
+        ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
+        query.whereEqualTo("idListeCovoiturage", idListeCovoiturage);
+        query.findInBackground(new FindCallback<ListeCovoiturage>() {
+            @Override
+            public void done(List<ListeCovoiturage> objects, ParseException e) {
+                if(e == null){
+                    for(ParseObject object:objects){
+                        object.deleteInBackground();
                     }
+                } else {
+                    System.out.println(e.getMessage());
                 }
-            });
-        }
+            }
+        });
+        */
+    }
 }

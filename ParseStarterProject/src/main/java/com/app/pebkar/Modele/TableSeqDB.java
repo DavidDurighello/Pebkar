@@ -10,14 +10,16 @@ import java.util.List;
 /**
  * Created by Lyyn on 23-11-15.
  */
-public class TableSeqDB extends TableSeq implements Crud {
+public class TableSeqDB implements Crud {
+
+    private TableSeq seq;
 
     public TableSeqDB() {
-        super();
+        seq = new TableSeq();
     }
 
     public TableSeqDB(String nomTable, int idseq) {
-        super(nomTable, idseq);
+        seq = new TableSeq(nomTable, idseq);
     }
 
     @Override
@@ -32,17 +34,14 @@ public class TableSeqDB extends TableSeq implements Crud {
 
     public List readData(String table) throws Exception {
         ParseQuery<TableSeq> query = ParseQuery.getQuery(TableSeq.class);
-        final List<TableSeq> listeSeq = new ArrayList<TableSeq>();
+        List<TableSeq> listeSeq;
 
         // Récupérer l'id de toutes les tables ou d'une seule ?
         if(!table.isEmpty()) query.whereMatches("NomTable", table);
 
-        query.findInBackground(new FindCallback<TableSeq>() {
-            @Override
-            public void done(List<TableSeq> objects, ParseException e) {
-                listeSeq.add((TableSeq) objects);
-            }
-        });
+        // PAS DE FINDINBACKGROUND SINON LE CODE NE SE SUIT PLUS ET TOUT EST CASSAY
+        listeSeq = query.find();
+
         return listeSeq;
     }
 

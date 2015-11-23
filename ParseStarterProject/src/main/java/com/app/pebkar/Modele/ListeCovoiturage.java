@@ -1,5 +1,6 @@
 package com.app.pebkar.Modele;
 
+import com.app.pebkar.Tools.StrTools;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -14,6 +15,8 @@ public class ListeCovoiturage extends ParseObject {
     Integer idListeCovoiturage;
     String lieudepart;
     String lieuarrivee;
+    String lieudepartASCII;
+    String lieuarriveeASCII;
     Date datedepart;
     Date datearrivee;
 
@@ -26,10 +29,14 @@ public class ListeCovoiturage extends ParseObject {
         this.lieuarrivee = lieuarrivee;
         this.datedepart = datedepart;
         this.datearrivee = datearrivee;
+        this.lieudepartASCII = StrTools.removeAccent(this.lieudepart);
+        this.lieuarriveeASCII = StrTools.removeAccent(this.lieuarrivee);
         put("lieudepart",lieudepart);
         put("lieuarrivee",lieuarrivee);
         put("datedepart",datedepart);
         put("datearrivee",datearrivee);
+        put("lieudepartASCII",lieudepartASCII);
+        put("lieuarriveeASCII",lieuarriveeASCII);
     }
 
     public ListeCovoiturage(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
@@ -38,11 +45,15 @@ public class ListeCovoiturage extends ParseObject {
         this.lieuarrivee = lieuarrivee;
         this.datedepart = datedepart;
         this.datearrivee = datearrivee;
+        this.lieudepartASCII = StrTools.removeAccent(this.lieudepart);
+        this.lieuarriveeASCII = StrTools.removeAccent(this.lieuarrivee);
         put("idListeCovoiturage",idListeCovoiturage);
         put("lieudepart",lieudepart);
         put("lieuarrivee",lieuarrivee);
         put("datedepart",datedepart);
         put("datearrivee",datearrivee);
+        put("lieudepartASCII",lieudepartASCII);
+        put("lieuarriveeASCII",lieuarriveeASCII);
     }
 
     public int getIdListeCovoiturage() {
