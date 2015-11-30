@@ -8,19 +8,30 @@
  */
 package com.app.pebkar;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.app.pebkar.Test.TestListeCovoiturage;
+import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
+  private Dialog progressDialog;
   public final static String EXTRA_MESSAGE = "com.app.pebkar.MESSAGE";
 
   @Override
@@ -30,7 +41,42 @@ public class MainActivity extends AppCompatActivity {
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
+    ParseUser user=new ParseUser();
 
+
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
+      // Go to the user info activity
+    }
+
+  }
+
+  public void onLoginClick(View v) {
+    progressDialog = ProgressDialog.show(MainActivity.this, "", "Logging in...", true);
+
+    List<String> permissions = Arrays.asList("public_profile", "email");
+    // NOTE: for extended permissions, like "user_about_me", your app must be reviewed by the Facebook team
+    // (https://developers.facebook.com/docs/facebook-login/permissions/)
+
+    ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+      @Override
+      public void done(ParseUser user, ParseException err) {
+        progressDialog.dismiss();
+        if (user == null) {
+          Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
+        } else if (user.isNew()) {
+          Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
+        } else {
+          Log.d(StarterApplication.TAG, "User logged in through Facebook!");
+        }
+      }
+    });
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
   }
 
   @Override
