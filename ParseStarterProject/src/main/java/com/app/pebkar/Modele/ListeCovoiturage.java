@@ -104,11 +104,11 @@ public class ListeCovoiturage extends ParseObject {
     @Override
     public String toString() {
         return "ListeCovoiturage{" +
-                "idListeCovoiturage=" + idListeCovoiturage +
-                ", lieudepart='" + lieudepart + '\'' +
-                ", lieuarrivee='" + lieuarrivee + '\'' +
-                ", datedepart=" + datedepart +
-                ", datearrivee=" + datearrivee +
+                "idListeCovoiturage=" + this.get("idListeCovoiturage").toString() +
+                ", lieudepart='" + this.get("lieudepart").toString() + '\'' +
+                ", lieuarrivee='" + this.get("lieuarrivee").toString() + '\'' +
+                ", datedepart=" + this.get("datedepart").toString() +
+                ", datearrivee=" + this.get("datearrivee").toString() +
                 '}';
     }
 

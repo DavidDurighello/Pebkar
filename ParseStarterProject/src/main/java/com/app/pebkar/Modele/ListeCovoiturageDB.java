@@ -132,14 +132,14 @@ public class ListeCovoiturageDB implements Crud {
 
     /**
      * Récupère la liste des covoiturages disponibles, avec ou sans filtre et mets à jour le listview lié à la table après la récup des données en background.
-     * @param liLink
+     * @param listeSTR
      * @param arrayAdapter
      * @param filtre
      * @return
      * @throws Exception
      */
-    public List<String> readData(final List<String> liLink, final ArrayAdapter<String> arrayAdapter, ListeCovoiturage filtre) throws Exception {
-        final List<String> liRead = new ArrayList<>();
+    public void readData(final List<String> listeSTR, final ArrayAdapter<String> arrayAdapter, final List<ListeCovoiturage> liFinal, ListeCovoiturage filtre) throws Exception {
+        final List<ListeCovoiturage> liRead = new ArrayList<>();
         ParseQuery<ListeCovoiturage> query = ParseQuery.getQuery(ListeCovoiturage.class);
 
         if(!filtre.isEmpty()) {
@@ -155,13 +155,7 @@ public class ListeCovoiturageDB implements Crud {
 
                 if (e == null) {
                     for (ListeCovoiturage lc : listeCovoiturage) {
-                        liRead.add(
-                                lc.get("idListeCovoiturage").toString() + " "
-                                        + lc.get("lieudepart").toString() + " "
-                                        + lc.get("lieuarrivee").toString() + " "
-                                        + lc.get("datedepart").toString() + " "
-                                        + lc.get("datearrivee").toString() + " "
-                        );
+                        liRead.add(lc);
                         System.out.println("[DEBUG] rD " + lc.get("idListeCovoiturage") + ": " + lc.get("lieudepart") + " " + lc.get("lieuarrivee") + " " + lc.get("datedepart") + " " + lc.get("datearrivee"));
                     }
                 } else {
@@ -169,20 +163,29 @@ public class ListeCovoiturageDB implements Crud {
                 }
 
                 // On vide la liste en cours pour la remplir des nouvelles données
-                liLink.clear();
-                for (String s : liRead) {
-                    liLink.add(s);
+                listeSTR.clear();
+                liFinal.clear();
+                for (ListeCovoiturage s : liRead) {
+                    liFinal.add(s);
+                    listeSTR.add(
+                            s.get("idListeCovoiturage").toString() + " "
+                                    + s.get("lieudepart").toString() + " "
+                                    + s.get("lieuarrivee").toString() + " "
+                                    + s.get("datedepart").toString() + " "
+                                    + s.get("datearrivee").toString() + " "
+                    );
                 }
 
                 // Si aucune donnée n'a été chargée
-                System.out.println("[DEBUG] La recherche a renvoyé " + liLink.size() + " résultats.");
-                if (liLink.size() == 0) liLink.add("La recherche n'a renvoyé aucun résultat.");
+                System.out.println("[DEBUG] La recherche a renvoyé " + listeSTR.size() + " résultats.");
+                if (listeSTR.size() == 0) listeSTR.add("La recherche n'a renvoyé aucun résultat.");
 
                 // Rafraîchir la liste sur l'UI
                 arrayAdapter.notifyDataSetChanged();
+                System.out.println("[DEBUG] liFinal : " + liFinal.size());
             }
         });
-        return liLink;
+        //return liRead;
     }
 
     @Override
