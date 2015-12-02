@@ -41,17 +41,19 @@ public class MainActivity extends AppCompatActivity {
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-    ParseUser user=new ParseUser();
+    UserConnected user = new UserConnected("test","test",getApplicationContext());
 
 
-    ParseUser currentUser = ParseUser.getCurrentUser();
+
+
+    /*ParseUser currentUser = ParseUser.getCurrentUser();
     if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
       // Go to the user info activity
-    }
+    }*/
 
   }
 
-  public void onLoginClick(View v) {
+    public void onLoginClickFacebook(View v) {
     progressDialog = ProgressDialog.show(MainActivity.this, "", "Logging in...", true);
 
     List<String> permissions = Arrays.asList("public_profile", "email");
@@ -110,5 +112,6 @@ public class MainActivity extends AppCompatActivity {
     intent.putExtra(EXTRA_MESSAGE, "Activity Search");
     startActivity(intent);
   }
+
 
 }

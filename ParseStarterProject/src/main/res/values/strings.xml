@@ -30,4 +30,7 @@
     <string name="valider">Valider</string>
 
     <string name="fb_connect">Se connecter</string>
+
+    <string name="connected">Connexion réussie</string>
+    <string name="connectionFailed">Connexion échouchée</string>
 </resources>
