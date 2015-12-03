@@ -11,9 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.pebkar.Modele.ListeCovoiturage;
+import com.app.pebkar.Modele.Passagers;
+import com.app.pebkar.Modele.ProfilDB;
 import com.app.pebkar.R;
-
-import java.util.Date;
+import com.parse.ParseUser;
 
 /**
  * Created by Lyyn on 30-11-15.
@@ -49,23 +50,48 @@ public class SearchDialog extends DialogFragment {
             tv_lieudepart.setText(voyage.getLieudepart());
         }
 
+
         // Inflate et set le layout pour le dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(this.getString(R.string.inscription), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // Oui.
+                        if (voyage.getNbPlaces() != 0) {
+
+                            //Récupération du profil lié à l'utilisateur
+                            ProfilDB profilDB = new ProfilDB();
+                            try {
+                                profilDB.getProfilFromUser(ParseUser.getCurrentUser());
+                            } catch (Exception e) {
+                                System.out.println("[DEBUG] Récupération du profil échouée");
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                Passagers passagers = new Passagers(profilDB.getProfil().getObjectId(), voyage.getObjectId(), false);
+                                passagers.saveInBackground();
+                                voyage.increment("nbPlaces", -1);
+                                voyage.saveInBackground();
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                System.out.println("[DEBUG] Ajout du passager échoué");
+                                e.printStackTrace();
+                            }
+
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.notEnoughPlaces), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                });
-        /*
-                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                })
+
+                .setNegativeButton(this.getString(R.string.retourner), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // Non.
+
                     }
                 });
-*/
+
         return builder.create();
     }
 

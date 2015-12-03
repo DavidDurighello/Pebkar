@@ -38,6 +38,11 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
+    <!-- Search Dialog -->
+    <string name="inscription">Register</string>
+    <string name="retourner">Return</string>
+    <string name="notEnoughPlaces">Not enough places</string>
+    <string name="inscriptionValidee">Registration succeed</string>
 
 
 </resources>

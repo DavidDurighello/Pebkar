@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
         //UserConnected user = new UserConnected("test","test",getApplicationContext());
 
+    // Connexion à user test
+    UserConnected user = new UserConnected("test","test",getApplicationContext());
+      //Ajout profil test
+      /*
+      Profil profilTest = new Profil("test","test","test","055/555555",ParseUser.getCurrentUser().getObjectId());
+      profilTest.saveInBackground();
+      */
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
             // Go to the user info activity
@@ -72,17 +80,17 @@ public class MainActivity extends AppCompatActivity {
         // (https://developers.facebook.com/docs/facebook-login/permissions/)
 
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException err) {
-                progressDialog.dismiss();
-                if (user == null) {
-                    Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
-                } else if (user.isNew()) {
-                    Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
-                } else {
-                    Log.d(StarterApplication.TAG, "User logged in through Facebook!");
-                }
+        @Override
+        public void done(ParseUser user, ParseException err) {
+            progressDialog.dismiss();
+            if (user == null) {
+                Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
+            } else if (user.isNew()) {
+                Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
+            } else {
+                Log.d(StarterApplication.TAG, "User logged in through Facebook!");
             }
+        }
         });
     }
 
@@ -137,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, "Activity Search");
         startActivity(intent);
     }
+
+
 
     public void debugInfo(View view) {
         ParseUser user = ParseUser.getCurrentUser();
