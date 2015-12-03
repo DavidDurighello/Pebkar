@@ -36,8 +36,6 @@
     <string name="connectionFailed">Connexion échouchée</string>
 
     <!-- Dialogue search - sélection -->
-
-
     <string name="d_search_title">Détails du voyage</string>
     <string name="d_search_vers">vers</string>
     <string name="d_search_datedepart">Départ le</string>
