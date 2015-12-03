@@ -55,7 +55,8 @@ public class SearchDialog extends DialogFragment {
                 .setPositiveButton(this.getString(R.string.inscription), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (voyage.getNbPlaces() != 0) {
+                        if (voyage.getNbPlaces() > 0) {
+                            System.out.println("[DEBUG] "+voyage.getNbPlaces());
 
                             //Récupération du profil lié à l'utilisateur
                             ProfilDB profilDB = new ProfilDB();
