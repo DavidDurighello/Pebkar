@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.pebkar.Modele.ListeCovoiturage;
 import com.app.pebkar.R;
@@ -27,6 +28,8 @@ public class SearchDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         System.out.println("[DEBUG][DIALOG] Créé !");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        Toast.makeText(getActivity().getApplicationContext(), "blblbl", Toast.LENGTH_SHORT);
 
         // Récupérer l'inflater de Layout
         LayoutInflater inflater = getActivity().getLayoutInflater();
