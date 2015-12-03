@@ -52,4 +52,10 @@
     <string name="friday">Vendredi</string>
     <string name="saturday">Samedi</string>
     <string name="sunday">Dimanche</string>
+
+    <!-- Search Dialog -->
+    <string name="inscription">S\'inscrire</string>
+    <string name="retourner">Retour</string>
+    <string name="notEnoughPlaces">Plus de places disponibles</string>
+    <string name="inscriptionValidee">Inscription réussie</string>
 </resources>

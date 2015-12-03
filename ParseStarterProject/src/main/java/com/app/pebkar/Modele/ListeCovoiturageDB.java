@@ -1,12 +1,10 @@
 package com.app.pebkar.Modele;
 
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.app.pebkar.Tools.StrTools;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -26,12 +24,12 @@ public class ListeCovoiturageDB implements Crud {
         this.voyage = voyage;
     }
 
-    public ListeCovoiturageDB(String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
-        this.voyage = new ListeCovoiturage(lieudepart, lieuarrivee, datedepart, datearrivee);
+    public ListeCovoiturageDB(String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee, Integer nbPlaces){
+        this.voyage = new ListeCovoiturage(lieudepart, lieuarrivee, datedepart, datearrivee, nbPlaces);
     }
 
-    public ListeCovoiturageDB(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee){
-        this.voyage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee);
+    public ListeCovoiturageDB(int idListeCovoiturage, String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee, Integer nbPlaces){
+        this.voyage = new ListeCovoiturage(idListeCovoiturage, lieudepart, lieuarrivee, datedepart, datearrivee, nbPlaces);
     }
 
     public void saveInBackground() {

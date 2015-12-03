@@ -2,13 +2,11 @@ package com.app.pebkar;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.app.pebkar.Modele.Dialog.SearchDialog;
 import com.app.pebkar.Modele.ListeCovoiturage;
@@ -96,5 +94,9 @@ public class Search extends AppCompatActivity {
      */
     public void btn_filtre(View view) {
         chargerVoyages();
+    }
+
+    public void validerSelection(){
+
     }
 }

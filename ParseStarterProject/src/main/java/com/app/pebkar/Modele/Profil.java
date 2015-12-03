@@ -9,35 +9,27 @@ import com.parse.ParseObject;
 
 @ParseClassName("Profil")
 public class Profil extends ParseObject{
-    int idProfil;
     String nom;
     String prenom;
     String adresse;
     String telephone;
+    String user;
 
     public Profil() {
     }
 
-    public Profil(int idProfil, String nom, String prenom, String adresse, String telephone) {
-        this.idProfil = idProfil;
+
+    public Profil(String nom, String prenom, String adresse, String telephone, String user) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.telephone = telephone;
-        put("idProfil",idProfil);
+        this.user = user;
         put("nom",nom);
         put("prenom",prenom);
         put("adresse",adresse);
         put("telephone",telephone);
-    }
-
-    public int getIdProfil() {
-        return idProfil;
-    }
-
-    public void setIdProfil(int idProfil) {
-        this.idProfil = idProfil;
-        put("idProfil",idProfil);
+        put("user",user);
     }
 
     public String getNom() {
@@ -74,5 +66,14 @@ public class Profil extends ParseObject{
     public void setTelephone(String telephone) {
         this.telephone = telephone;
         put("telephone",telephone);
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String parent) {
+        this.user = parent;
+        put("user",parent);
     }
 }

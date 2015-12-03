@@ -13,6 +13,7 @@ public class TestLC  {
 
         ListeCovoiturageDB lc1, lc2;
         Date datedepart, datearrivee;
+        Integer nbPlaces;
 
         try {
             System.out.println("--- Test Ajout ---");
@@ -20,8 +21,9 @@ public class TestLC  {
             datedepart = new Date();
             datearrivee = new Date();
             datearrivee.setTime(datedepart.getTime() + 3600000);
+            nbPlaces = 4;
 
-            lc1 = new ListeCovoiturageDB("Ville1", "Ville2", datedepart, datearrivee);
+            lc1 = new ListeCovoiturageDB("Ville1", "Ville2", datedepart, datearrivee,nbPlaces);
             lc1.createData();
         }
         catch(Exception e) {

@@ -43,8 +43,9 @@ public class TestListeCovoiturage extends AppCompatActivity {
         Date datedeparttest = new Date();
         Date datearriveetest = new Date();
         datearriveetest.setTime(datedeparttest.getTime() + 3600000);
+        Integer nbPlaces = 4;
 
-        lcDB1 = new ListeCovoiturageDB("lieudeptest","lieuarriveetest",datedeparttest,datearriveetest);
+        lcDB1 = new ListeCovoiturageDB("lieudeptest","lieuarriveetest",datedeparttest,datearriveetest,nbPlaces);
         try {
             lcDB1.createData();
             lcDB2 = new ListeCovoiturageDB();

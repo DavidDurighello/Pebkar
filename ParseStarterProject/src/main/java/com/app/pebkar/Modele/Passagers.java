@@ -9,39 +9,39 @@ import com.parse.ParseObject;
 
 @ParseClassName("Passagers")
 public class Passagers extends ParseObject{
-    int idProfil;
-    int idListeCovoiturage;
+    String profil;
+    String listecovoiturage;
     boolean estConducteur;
 
     public Passagers() {
 
     }
 
-    public Passagers(int idProfil, int idListeCovoiturage, boolean estConducteur) {
-        this.idProfil = idProfil;
-        this.idListeCovoiturage = idListeCovoiturage;
+    public Passagers(String profil, String listecovoiturage, boolean estConducteur) {
+        this.profil = profil;
+        this.listecovoiturage = listecovoiturage;
         this.estConducteur = estConducteur;
-        put("idProfil",idProfil);
-        put("idListeCovoiturage",idListeCovoiturage);
+        put("profil",profil);
+        put("listecovoiturage",listecovoiturage);
         put("estConducteur",estConducteur);
     }
 
-    public int getIdProfil() {
-        return idProfil;
+    public String getProfil() {
+        return profil;
     }
 
-    public void setIdProfil(int idProfil) {
-        this.idProfil = idProfil;
-        put("idProfil",idProfil);
+    public void setProfil(String profil) {
+        this.profil = profil;
+        put("profil",profil);
     }
 
-    public int getIdListeCovoiturage() {
-        return idListeCovoiturage;
+    public String getListecovoiturage() {
+        return listecovoiturage;
     }
 
-    public void setIdListeCovoiturage(int idListeCovoiturage) {
-        this.idListeCovoiturage = idListeCovoiturage;
-        put("idListeCovoiturage",idListeCovoiturage);
+    public void setListecovoiturage(String listecovoiturage) {
+        this.listecovoiturage = listecovoiturage;
+        put("listecovoiturage",listecovoiturage);
     }
 
     public boolean isEstConducteur() {
