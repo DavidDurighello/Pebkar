@@ -32,16 +32,21 @@
 
     <string name="fb_connect">Se connecter</string>
 
+    <string name="connected">Connexion réussie</string>
+    <string name="connectionFailed">Connexion échouchée</string>
 
     <!-- Dialogue search - sélection -->
+
+
     <string name="d_search_title">Détails du voyage</string>
     <string name="d_search_vers">vers</string>
     <string name="d_search_datedepart">Départ le</string>
     <string name="d_search_datearrivee">Arrivée le</string>
     <string name="d_search_loading">Chargement des données en cours…</string>
     <string name="d_search_error">Erreur lors du chargement des données</string>
-
+    
     <!-- Jours de la semaine -->
+
     <string name="monday">Lundi</string>
     <string name="tuesday">Mardi</string>
     <string name="wednesday">Mercredi</string>
