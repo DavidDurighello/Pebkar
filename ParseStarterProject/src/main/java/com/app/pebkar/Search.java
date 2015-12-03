@@ -53,7 +53,7 @@ public class Search extends AppCompatActivity {
         for(ListeCovoiturage l: listeCovoiturage) {
             System.out.println(l.get("lieudepart"));
         }
-        Toast.makeText(this, "Test (" + index + ") : " + listeCovoiturage.get(index).toString() + "\n\nSize : " + listeCovoiturage.size(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Test (" + index + ") : " + listeCovoiturage.get(index).toString() + "\n\nSize : " + listeCovoiturage.size(), Toast.LENGTH_SHORT).show();
 
         // Dialog
         SearchDialog details = new SearchDialog();
@@ -71,22 +71,19 @@ public class Search extends AppCompatActivity {
 
         filtre.setLieudepart(((EditText) findViewById(R.id.et_ville)).getText().toString()); // Ville de départ recherchée
         filtre.setLieuarrivee(((EditText) findViewById(R.id.et_ville2)).getText().toString());
-        //System.out.println("[DEBUG] Filtre : " + filtre.toString());
 
         try {
             listSearch.clear();
             listeCovoiturage.clear();
-            listSearch.add("Chargement des données en cours...");
+            listSearch.add(getString(R.string.d_search_loading));
             arrayAdapterSearch.notifyDataSetChanged();
 
-            System.out.println("[DEBUG] ListeCovoiturage size : " + listeCovoiturage.size());
             listeCovoiturageDB.readData(listSearch, arrayAdapterSearch, listeCovoiturage, filtre);
-            System.out.println("[DEBUG] ListeCovoiturage size : " + listeCovoiturage.size());
         }
         catch (Exception e) {
             listSearch.clear();
             listeCovoiturage.clear();
-            listSearch.add("Erreur lors du chargement des données");
+            listSearch.add(getString(R.string.d_search_error));
             arrayAdapterSearch.notifyDataSetChanged();
 
             e.printStackTrace();
@@ -99,12 +96,5 @@ public class Search extends AppCompatActivity {
      */
     public void btn_filtre(View view) {
         chargerVoyages();
-    }
-
-    public void btn_count(View view) {
-        Toast.makeText(this, "Count : " + this.listSearch.size(), Toast.LENGTH_SHORT).show();
-    }
-    public void testList(View view) {
-        Toast.makeText(this, "Count : " + this.listSearch.size(), Toast.LENGTH_SHORT).show();
     }
 }

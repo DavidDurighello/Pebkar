@@ -2,20 +2,17 @@ package com.app.pebkar.Modele.Dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.pebkar.Modele.ListeCovoiturage;
 import com.app.pebkar.R;
-import com.app.pebkar.Search;
 
-import org.w3c.dom.Text;
+import java.util.Date;
 
 /**
  * Created by Lyyn on 30-11-15.
@@ -23,7 +20,7 @@ import org.w3c.dom.Text;
  */
 public class SearchDialog extends DialogFragment {
 
-    TextView tv_id, tv_lieudepart;
+    TextView tv_lieuarrivee, tv_lieudepart, tv_titre, tv_datedepart, tv_datearrivee;
     ListeCovoiturage voyage;
 
     @Override
@@ -34,30 +31,38 @@ public class SearchDialog extends DialogFragment {
         // Récupérer l'inflater de Layout
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_search, null);
-        tv_id = (TextView) view.findViewById(R.id.tv_d_search_id);
+        tv_titre = (TextView) view.findViewById(R.id.tv_d_search_title);
+        tv_lieuarrivee = (TextView) view.findViewById(R.id.tv_d_search_lieuarrivee);
         tv_lieudepart = (TextView) view.findViewById(R.id.tv_d_search_lieudepart);
+        tv_datedepart = (TextView) view.findViewById(R.id.tv_d_search_datedepart);
+        tv_datearrivee = (TextView) view.findViewById(R.id.tv_d_search_datearrivee);
 
         if(voyage != null) {
-            tv_id.setText("ID : " + voyage.get("idListeCovoiturage"));
-            tv_lieudepart.setText("Lieu de départ : " + voyage.get("lieudepart"));
+            tv_titre.append(" #" + voyage.getIdListeCovoiturage());
+            tv_lieudepart.setText(voyage.getLieudepart());
+            tv_lieuarrivee.setText(voyage.getLieuarrivee());
+            tv_datedepart.setText(voyage.getDatedepartStr());
+            tv_datearrivee.setText(voyage.getDatearriveeStr());
+            tv_lieudepart.setText(voyage.getLieudepart());
         }
 
         // Inflate et set le layout pour le dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Oui.
                     }
-                })
+                });
+        /*
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Non.
                     }
                 });
-
+*/
         return builder.create();
     }
 

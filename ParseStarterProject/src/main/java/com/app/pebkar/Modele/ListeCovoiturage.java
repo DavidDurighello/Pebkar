@@ -1,10 +1,15 @@
 package com.app.pebkar.Modele;
 
+import com.app.pebkar.R;
 import com.app.pebkar.Tools.StrTools;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by David Elykx on 19-11-15.
@@ -21,7 +26,6 @@ public class ListeCovoiturage extends ParseObject {
     Date datearrivee;
 
     public ListeCovoiturage(){
-
     }
 
     public ListeCovoiturage(String lieudepart, String lieuarrivee, Date datedepart, Date datearrivee) {
@@ -99,6 +103,51 @@ public class ListeCovoiturage extends ParseObject {
     public void setDatearrivee(Date datearrivee) {
         this.datearrivee = datearrivee;
         put("datearrivee",datearrivee);
+    }
+
+    /**
+     * Renvoie le format court d'une date, selon la langue de l'appli
+     * Les mois et jours seront inversés si en US ou en FR.
+     * http://stackoverflow.com/questions/16837923/date-string-from-gregoriancalendar-based-on-locale
+     * @param date
+     * @return
+     */
+    public String getBeautifulDate(Date date) {
+        GregorianCalendar calendar = new GregorianCalendar();
+
+        calendar.setTime(date);
+
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+    }
+
+    /**
+     * Wrapper pour getBeautifulDate
+     * @return
+     */
+    public String getDatearriveeStr() {
+        return getBeautifulDate(datearrivee);
+    }
+
+    /**
+     * Wrapper pour getBeautifulDate
+     * @return
+     */
+    public String getDatedepartStr() {
+        return getBeautifulDate(datedepart);
+    }
+
+    /**
+     * Quand on crée l'objet via une query, on peut récupérer les infos via get("colonne") mais il est plus aisé d'utiliser des getters classiques
+     * Cette méthode mets donc à jour les attributs de l'objet par rapport aux données du ParseObject
+     */
+    public void updateObject() {
+        this.idListeCovoiturage = (Integer) get("idListeCovoiturage");
+        this.lieudepart = (String) get("lieudepart");
+        this.lieudepartASCII = (String) get("lieudepartASCII");
+        this.lieuarrivee = (String) get("lieuarrivee");
+        this.lieuarriveeASCII = (String) get("lieuarriveeASCII");
+        this.datedepart = (Date) get("datedepart");
+        this.datearrivee = (Date) get("datearrivee");
     }
 
     @Override

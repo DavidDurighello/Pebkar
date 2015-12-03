@@ -155,6 +155,7 @@ public class ListeCovoiturageDB implements Crud {
 
                 if (e == null) {
                     for (ListeCovoiturage lc : listeCovoiturage) {
+                        lc.updateObject();
                         liRead.add(lc);
                         System.out.println("[DEBUG] rD " + lc.get("idListeCovoiturage") + ": " + lc.get("lieudepart") + " " + lc.get("lieuarrivee") + " " + lc.get("datedepart") + " " + lc.get("datearrivee"));
                     }

@@ -24,7 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ville d'arrivée : "
+        android:text="@string/ville_arrivee"
         android:id="@+id/tv_ville2"
         android:textSize="20sp"
         android:layout_below="@+id/et_ville"
@@ -34,7 +34,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Entrez une ville ici..."
+        android:hint="@string/ville_hint"
         android:id="@+id/et_ville2"
         android:textSize="20sp"
         android:layout_toRightOf="@+id/tv_ville2"

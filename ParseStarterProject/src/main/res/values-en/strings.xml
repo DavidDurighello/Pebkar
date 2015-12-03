@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="btn_connexion">Login</string>
+    <string name="btn_recherche">Search</string>
+    <string name="d_search_datedepart">Start at</string>
+    <string name="d_search_title">Detail of ride</string>
+    <string name="d_search_vers">to</string>
+    <string name="fb_connect">Login</string>
+    <string name="filtre">Filter</string>
+    <string name="friday"></string>
+    <string name="title_activity_search">Search</string>
+    <string name="valider">Apply</string>
+    <string name="ville">Departure City:</string>
+    <string name="ville_hint">Write a city here...</string>
+    <string name="d_search_datearrivee">End at</string>
+    <string name="d_search_loading">Retrieving data…</string>
+    <string name="d_search_error">Error while retrieving data…</string>
+    <string name="ville_arrivee">Arrival City:</string>
+</resources>
