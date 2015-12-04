@@ -74,6 +74,7 @@ public class SearchDialog extends DialogFragment {
                                 passagers.saveInBackground();
                                 voyage.increment("nbPlaces", -1);
                                 voyage.saveInBackground();
+                                voyage.setNbPlaces(voyage.getNbPlaces()-1);
                                 Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
                                 System.out.println("[DEBUG] Ajout du passager échoué");
