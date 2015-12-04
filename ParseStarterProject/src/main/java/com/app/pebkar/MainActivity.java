@@ -24,6 +24,8 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         //UserConnected user = new UserConnected("test","test",getApplicationContext());
 
     // Connexion à user test
-    UserConnected user = new UserConnected("test","test",getApplicationContext());
       //Ajout profil test
       /*
       Profil profilTest = new Profil("test","test","test","055/555555",ParseUser.getCurrentUser().getObjectId());
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
             // Go to the user info activity
+            Log.e("[FB]", AccessToken.getCurrentAccessToken().toString());
+            Log.e("[FB]", Profile.getCurrentProfile().getName());
             Toast.makeText(this, "User connecté à Facebook", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -80,32 +83,47 @@ public class MainActivity extends AppCompatActivity {
         // (https://developers.facebook.com/docs/facebook-login/permissions/)
 
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-        @Override
-        public void done(ParseUser user, ParseException err) {
-            progressDialog.dismiss();
-            if (user == null) {
-                Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
-            } else if (user.isNew()) {
-                Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
-            } else {
-                Log.d(StarterApplication.TAG, "User logged in through Facebook!");
+            @Override
+            public void done(ParseUser user, ParseException err) {
+                progressDialog.dismiss();
+                if (user == null) {
+                    Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
+                } else if (user.isNew()) {
+                    Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
+                } else {
+                    Log.d(StarterApplication.TAG, "User logged in through Facebook!");
+                }
+
+                //ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
+                Log.e("[FB]", "Session créée");
             }
-        }
         });
+
+
     }
 
     public void fillFBInfo() {
-        GraphRequest request = new GraphRequest().newMeRequest(
-                AccessToken.getCurrentAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Code
-                        Log.d("[JSON]", object.toString());
-                        Log.d("[Graph]", response.toString());
+        AccessToken token = AccessToken.getCurrentAccessToken();
+
+        if(token == null) {
+            Toast.makeText(this, "Pas de token", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            GraphRequest request = new GraphRequest().newMeRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            // Code
+                            System.out.println(object.toString());
+                            System.out.println(response.toString());
+                            Log.e("[sdfsdf]", "BANAZND4654654");
+                        }
                     }
-                }
-        );
+            );
+            Log.e("sdqsd", request.toString());
+            Log.e("sss", request.getClass().getName());
+        }
     }
 
     @Override

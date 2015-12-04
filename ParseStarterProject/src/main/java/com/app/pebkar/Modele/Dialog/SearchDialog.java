@@ -30,8 +30,6 @@ public class SearchDialog extends DialogFragment {
         System.out.println("[DEBUG][DIALOG] Créé !");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        Toast.makeText(getActivity().getApplicationContext(), "blblbl", Toast.LENGTH_SHORT);
-
         // Récupérer l'inflater de Layout
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_search, null);
@@ -74,6 +72,7 @@ public class SearchDialog extends DialogFragment {
                                 passagers.saveInBackground();
                                 voyage.increment("nbPlaces", -1);
                                 voyage.saveInBackground();
+                                voyage.setNbPlaces(voyage.getNbPlaces()-1);
                                 Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
                                 System.out.println("[DEBUG] Ajout du passager échoué");
