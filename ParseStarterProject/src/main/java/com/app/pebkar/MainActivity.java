@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
-                Log.e("[FB]", "Session créée");
+                //Log.e("[FB]", "Session créée");
             }
         });
 
@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                             // Code
                             System.out.println(object.toString());
                             System.out.println(response.toString());
-                            Log.e("[sdfsdf]", "BANAZND4654654");
                         }
                     }
             );
