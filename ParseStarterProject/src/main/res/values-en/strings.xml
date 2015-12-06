@@ -2,7 +2,6 @@
 <resources>
     <string name="action_settings">Settings</string>
 
-    <string name="btn_debug">DEBUG</string>
     <string name="btn_recherche">Search</string>
 
     <string name="title_activity_search">Search</string>
@@ -11,16 +10,16 @@
     <string name="filtre">Filter</string>
     <string name="ville">Departure City:</string>
     <string name="ville_arrivee">Arrival City:</string>
-    <string name="ville_hint">Write a city here...</string>
+    <string name="ville_hint">Write a city here…</string>
     <string name="valider">Apply</string>
 
     <string name="connect">Login</string>
 
-    <string name="connected">Connection succeed</string>
+    <string name="connected">Connection successful</string>
     <string name="connectionFailed">Connection failed</string>
 
     <!-- Dialogue search - sélection -->
-    <string name="d_search_title">Detail of ride</string>
+    <string name="d_search_title">Details of ride</string>
     <string name="d_search_vers">to</string>
     <string name="d_search_datedepart">Start at</string>
     <string name="d_search_datearrivee">End at</string>
@@ -42,7 +41,7 @@
     <string name="inscription">Register</string>
     <string name="retourner">Return</string>
     <string name="notEnoughPlaces">Not enough places</string>
-    <string name="inscriptionValidee">Registration succeed</string>
+    <string name="inscriptionValidee">Registration successful</string>
     <string name="disconnect">Disconnect</string>
     <string name="fb_connected">You\'re now connected to Facebook</string>
     <string name="fb_disconnected">You\'re now disconnected from Facebook</string>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Einstellungen</string>
+    <string name="btn_recherche">Suche</string>
+    <string name="connect">Einloggen</string>
+    <string name="connected">Verbindung erfolgreich</string>
+    <string name="connectionFailed">Verbindung fehlgeschlagen</string>
+    <string name="d_search_datearrivee">Enden an</string>
+    <string name="d_search_datedepart">Anfangen bei</string>
+    <string name="d_search_error">Fehler beim Abrufen von Daten…</string>
+    <string name="d_search_loading">Daten werden geladen…</string>
+    <string name="d_search_title">Details der Fahrt</string>
+    <string name="d_search_vers">zu</string>
+    <string name="disconnect">Trennen</string>
+    <string name="fb_connected">Sie können nun mit Facebook verbunden</string>
+    <string name="fb_disconnected">Sie werden in Zukunft von Facebook getrennt</string>
+    <string name="fb_disconnection_error">Fehler beim Trennen von Facebook</string>
+    <string name="filtre">Filter</string>
+    <string name="friday">Freitag</string>
+    <string name="inscription">Neu registrieren</string>
+    <string name="inscriptionValidee">Registrierung erfolgreich</string>
+    <string name="monday">Montag</string>
+    <string name="notEnoughPlaces">Nicht genügend Plätze</string>
+    <string name="retourner">Rückkehr</string>
+    <string name="saturday">Samstag</string>
+    <string name="sunday">Sonntag</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="title_activity_search">Suche</string>
+    <string name="todo">Funktion nicht implementiert</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="valider">Bewerben</string>
+    <string name="ville">Ausgangsstadt:</string>
+    <string name="ville_arrivee">Ankunftsstadt:</string>
+    <string name="ville_hint">Schreiben Sie eine Stadt hier …</string>
+    <string name="wednesday">Mittwoch</string>
+</resources>

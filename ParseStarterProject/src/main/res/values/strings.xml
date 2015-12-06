@@ -19,7 +19,7 @@
     <string name="action_example" translatable="false">Pebkar</string>
     <string name="todo">Fonction non implémentée</string>
 
-    <string name="btn_debug">DEBUG</string>
+    <string name="btn_debug" translatable="false">DEBUG</string>
     <string name="btn_recherche">Rechercher</string>
     <string name="logo_pebkar" translatable="false">Logo Pebkar</string>
     <string name="title_activity_search">Rechercher</string>
