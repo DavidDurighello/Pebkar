@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
         getApplicationContext();
 
-        UserConnected user = new UserConnected("test","test",getApplicationContext());
+        UserConnected user = new UserConnected("test", "test", getApplicationContext());
 
     // Connexion à user test
       //Ajout profil test
@@ -62,15 +62,17 @@ public class MainActivity extends AppCompatActivity {
       */
 
         ParseUser currentUser = ParseUser.getCurrentUser();
+        /*
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
             // Go to the user info activity
             Log.e("[FB]", AccessToken.getCurrentAccessToken().toString());
             Log.e("[FB]", Profile.getCurrentProfile().getName());
-            Toast.makeText(this, "User connecté à Facebook", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "User connecté à Facebook", Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, "Non connecté à Facebook", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Non connecté à Facebook", Toast.LENGTH_SHORT).show();
         }
+        */
 
     }
 

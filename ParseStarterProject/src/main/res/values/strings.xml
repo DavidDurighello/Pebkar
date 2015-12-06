@@ -18,7 +18,7 @@
     <string name="action_settings">Paramètres</string>
     <string name="action_example" translatable="false">Pebkar</string>
 
-    <string name="btn_connexion">Se connecter</string>
+    <string name="btn_connexion">DEBUG</string>
     <string name="btn_recherche">Rechercher</string>
     <string name="logo_pebkar" translatable="false">Logo Pebkar</string>
     <string name="title_activity_search">Rechercher</string>
@@ -59,4 +59,5 @@
     <string name="retourner">Retour</string>
     <string name="notEnoughPlaces">Plus de places disponibles</string>
     <string name="inscriptionValidee">Inscription réussie</string>
+    <string name="inscriptionDejaFaite">Inscription déjà effectuée à ce voyage</string>
 </resources>

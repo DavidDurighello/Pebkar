@@ -2,7 +2,7 @@
 <resources>
     <string name="action_settings">Settings</string>
 
-    <string name="btn_connexion">Login</string>
+    <string name="btn_connexion">DEBUG</string>
     <string name="btn_recherche">Search</string>
 
     <string name="title_activity_search">Search</string>
@@ -43,6 +43,7 @@
     <string name="retourner">Return</string>
     <string name="notEnoughPlaces">Not enough places</string>
     <string name="inscriptionValidee">Registration succeed</string>
+    <string name="inscriptionDejaFaite">You\'re already registered for this trip</string>
 
 
 </resources>
