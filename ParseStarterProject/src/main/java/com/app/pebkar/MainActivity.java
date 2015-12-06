@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
         getApplicationContext();
 
-        //UserConnected user = new UserConnected("test","test",getApplicationContext());
+        UserConnected user = new UserConnected("test","test",getApplicationContext());
 
     // Connexion à user test
       //Ajout profil test
