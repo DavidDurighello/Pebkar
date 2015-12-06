@@ -14,22 +14,38 @@ public class Profil extends ParseObject{
     String adresse;
     String telephone;
     String user;
+    String FBid;
 
     public Profil() {
     }
 
 
-    public Profil(String nom, String prenom, String adresse, String telephone, String user) {
+    public Profil(String nom, String prenom, String adresse, String telephone, String user, String FBid) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.telephone = telephone;
         this.user = user;
-        put("nom",nom);
+        this.FBid = FBid;
+        put("nom", nom);
         put("prenom",prenom);
         put("adresse",adresse);
         put("telephone",telephone);
         put("user",user);
+        put("FBid", FBid);
+    }
+
+    /**
+     * Quand on crée l'objet via une query, on peut récupérer les infos via get("colonne") mais il est plus aisé d'utiliser des getters classiques
+     * Cette méthode mets donc à jour les attributs de l'objet par rapport aux données du ParseObject
+     */
+    public void updateObject() {
+        this.nom = (String) get("nom");
+        this.prenom = (String) get("prenom");
+        this.adresse = (String) get("adresse");
+        this.telephone = (String) get("telephone");
+        this.user = (String) get("user");
+        this.FBid = (String) get("FBid");
     }
 
     public String getNom() {
@@ -75,5 +91,25 @@ public class Profil extends ParseObject{
     public void setUser(String parent) {
         this.user = parent;
         put("user",parent);
+    }
+
+    public String getFBid() {
+        return FBid;
+    }
+
+    public void setFBid(String FBid) {
+        this.FBid = FBid;
+    }
+
+    @Override
+    public String toString() {
+        return "Profil{" +
+                "nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", user='" + user + '\'' +
+                ", FBid='" + FBid + '\'' +
+                '}';
     }
 }

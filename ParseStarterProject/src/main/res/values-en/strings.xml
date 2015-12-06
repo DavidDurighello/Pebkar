@@ -2,7 +2,7 @@
 <resources>
     <string name="action_settings">Settings</string>
 
-    <string name="btn_connexion">Login</string>
+    <string name="btn_debug">DEBUG</string>
     <string name="btn_recherche">Search</string>
 
     <string name="title_activity_search">Search</string>
@@ -14,7 +14,7 @@
     <string name="ville_hint">Write a city here...</string>
     <string name="valider">Apply</string>
 
-    <string name="fb_connect">Login</string>
+    <string name="connect">Login</string>
 
     <string name="connected">Connection succeed</string>
     <string name="connectionFailed">Connection failed</string>
@@ -43,6 +43,10 @@
     <string name="retourner">Return</string>
     <string name="notEnoughPlaces">Not enough places</string>
     <string name="inscriptionValidee">Registration succeed</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="fb_connected">You\'re now connected to Facebook</string>
+    <string name="fb_disconnected">You\'re now disconnected from Facebook</string>
+    <string name="fb_disconnection_error">Error while disconnecting from Facebook</string>
 
 
 </resources>

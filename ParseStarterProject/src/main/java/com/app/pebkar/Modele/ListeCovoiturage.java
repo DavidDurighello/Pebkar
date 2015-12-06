@@ -150,8 +150,6 @@ public class ListeCovoiturage extends ParseObject {
      * Quand on crée l'objet via une query, on peut récupérer les infos via get("colonne") mais il est plus aisé d'utiliser des getters classiques
      * Cette méthode mets donc à jour les attributs de l'objet par rapport aux données du ParseObject
      */
-
-
     public void updateObject() {
         this.idListeCovoiturage = (Integer) get("idListeCovoiturage");
         this.lieudepart = (String) get("lieudepart");

@@ -40,16 +40,16 @@
     <Button
         android:layout_width="142dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn_connexion"
+        android:text="@string/btn_debug"
         android:onClick="debugInfo"
-        android:id="@+id/btn_connexion"
+        android:id="@+id/btn_debug"
         android:layout_row="1"
         android:layout_column="1" />
 
     <Button
         android:layout_width="143dp"
         android:layout_height="wrap_content"
-        android:text="@string/fb_connect"
+        android:text="@string/connect"
         android:id="@+id/btn_fb"
         android:layout_row="3"
         android:layout_column="1"
