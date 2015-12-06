@@ -17,6 +17,7 @@
     <string name="hello_world" translatable="false">Hello World!</string>
     <string name="action_settings">Paramètres</string>
     <string name="action_example" translatable="false">Pebkar</string>
+    <string name="todo">Fonction non implémentée</string>
 
     <string name="btn_debug">DEBUG</string>
     <string name="btn_recherche">Rechercher</string>

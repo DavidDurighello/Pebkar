@@ -27,7 +27,6 @@ public class SearchDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        System.out.println("[DEBUG][DIALOG] Créé !");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         // Récupérer l'inflater de Layout
@@ -101,7 +100,6 @@ public class SearchDialog extends DialogFragment {
     }
 
     public void setVoyage(ListeCovoiturage voyage) {
-        System.out.println("[DEBUG][Dialog] Voyage set");
         this.voyage = voyage;
     }
 }

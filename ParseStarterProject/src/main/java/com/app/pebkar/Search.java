@@ -51,7 +51,6 @@ public class Search extends AppCompatActivity {
         for(ListeCovoiturage l: listeCovoiturage) {
             System.out.println(l.get("lieudepart"));
         }
-        //Toast.makeText(this, "Test (" + index + ") : " + listeCovoiturage.get(index).toString() + "\n\nSize : " + listeCovoiturage.size(), Toast.LENGTH_SHORT).show();
 
         // Dialog
         SearchDialog details = new SearchDialog();
@@ -94,9 +93,5 @@ public class Search extends AppCompatActivity {
      */
     public void btn_filtre(View view) {
         chargerVoyages();
-    }
-
-    public void validerSelection(){
-
     }
 }

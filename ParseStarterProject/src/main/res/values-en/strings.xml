@@ -47,6 +47,7 @@
     <string name="fb_connected">You\'re now connected to Facebook</string>
     <string name="fb_disconnected">You\'re now disconnected from Facebook</string>
     <string name="fb_disconnection_error">Error while disconnecting from Facebook</string>
+    <string name="todo">Function not implemented</string>
 
 
 </resources>

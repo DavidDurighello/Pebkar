@@ -26,7 +26,6 @@ import com.facebook.AccessToken;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -57,29 +56,19 @@ public class MainActivity extends AppCompatActivity {
         // Récupération des widgets
         FBButton = (Button) findViewById(R.id.btn_fb);
 
-        //UserConnected user = new UserConnected("test","test",getApplicationContext());
-
-        // Connexion à user test
-        //Ajout profil test
-        /*
-        Profil profilTest = new Profil("test","test","test","055/555555",ParseUser.getCurrentUser().getObjectId());
-        profilTest.saveInBackground();
-        */
-
+        // Gestion de la connexion de l'User
+            // [DEBUG]
+            //UserConnected user = new UserConnected("test","test",getApplicationContext());
+            // Connexion à user test
+            //Ajout profil test
+            /*
+            Profil profilTest = new Profil("test","test","test","055/555555",ParseUser.getCurrentUser().getObjectId());
+            profilTest.saveInBackground();
+            */
         currentUser = ParseUser.getCurrentUser();
         userProfile = new ProfilDB();
 
-        //ParseFacebookUtils.unlinkInBackground(currentUser);
-        Log.e("[???]", currentUser.toString() + " \n" + ParseFacebookUtils.isLinked(currentUser));
-
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-            // Go to the user info activity
-            //Log.e("[FB]", AccessToken.getCurrentAccessToken().toString());
-            //Log.e("[FB]", Profile.getCurrentProfile().getName());
-            //Log.e("[FB]", Profile.getCurrentProfile().getId());
-            //Log.e("[FB]", AccessToken.ACCESS_TOKEN_KEY);
-            //Toast.makeText(this, "User connecté à Facebook", Toast.LENGTH_SHORT).show();
-
             // Si connecté à Facebook : on regarde si un profil existe
             // S'il existe : on le récupère
             // S'il n'existe pas : on le crée avec les infos qu'on a de FB
@@ -91,21 +80,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "User connecté via FB (1ère connexion)", Toast.LENGTH_SHORT).show();
             }
 
-            Log.e("[FBUser - onCreate]", userProfile.toString());
+            //Log.e("[FBUser - onCreate]", userProfile.toString());
             FBButton.setText(getString(R.string.disconnect));
 
         }
         else {
-            // Toast.makeText(this, "Non connecté à Facebook", Toast.LENGTH_SHORT).show();
             FBButton.setText(getString(R.string.connect));
         }
 
     }
 
     public void onLoginClickFacebook(View v) {
-
         List<String> permissions = Arrays.asList("public_profile", "email");
-
 
         /**
          * L'user n'est pas connecté à FB
@@ -122,18 +108,18 @@ public class MainActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     if (user == null) {
                         Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
-                    } else if (user.isNew()) {
+                    }
+                    else if (user.isNew()) {
                         Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
                         FBButton.setText(getString(R.string.disconnect));
                         userProfile.getProfilFromFB(Profile.getCurrentProfile());
-                    } else {
+                    }
+                    else {
                         Log.d(StarterApplication.TAG, "User logged in through Facebook!");
                         FBButton.setText(getString(R.string.disconnect));
                         userProfile.getProfilFromFB(Profile.getCurrentProfile());
                     }
                     ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
-
-                    //Log.e("[FB]", "Session créée");
                 }
             });
         }
@@ -168,27 +154,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-// Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-// Handle action bar item clicks here. The action bar will
-// automatically handle clicks on the Home/Up button, so long
-// as you specify a parent activity in AndroidManifest.xml.
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//noinspection SimplifiableIfStatement
+    //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, getString(R.string.todo), Toast.LENGTH_SHORT).show();
             return true;
         }
-        if(id == R.id.action_testCRUD) {
-            startActivity(new Intent(this, TestListeCovoiturage.class));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -224,9 +206,5 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, tmp, Toast.LENGTH_SHORT).show();
         Log.e("test", userProfile.toString());
-    }
-
-    public void decoFB(View view) {
-
     }
 }

@@ -65,14 +65,11 @@ public class ListeCovoiturageDB implements Crud {
         Integer idSeq;
 
         Aseq = tableSeqDB.readData("ListeCovoiturage");
-        //System.out.println("[DEBUG] Aseq size : " + Aseq.size());
-        //System.out.println("[DEBUG] Aseq print : " + Aseq.toString());
 
         seq = Aseq.get(0);
         idSeq = seq.getInt("idseq");
         seq.increment("idseq");
         seq.saveInBackground();
-        //System.out.println("[DEBUG] idSeq : " + idSeq);
         this.voyage.setIdListeCovoiturage(idSeq);
 
 
