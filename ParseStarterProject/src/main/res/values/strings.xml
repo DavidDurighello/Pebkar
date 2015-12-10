@@ -64,4 +64,5 @@
     <string name="retourner">Retour</string>
     <string name="notEnoughPlaces">Plus de places disponibles</string>
     <string name="inscriptionValidee">Inscription réussie</string>
+    <string name="inscriptionDejaFaite">Inscription déjà effectuée à ce voyage</string>
 </resources>

@@ -33,4 +33,5 @@
     <string name="ville_arrivee">Ankunftsstadt:</string>
     <string name="ville_hint">Schreiben Sie eine Stadt hier …</string>
     <string name="wednesday">Mittwoch</string>
+    <string name="inscriptionDejaFaite">Sie sind bereits für diese Reise registriert</string>
 </resources>

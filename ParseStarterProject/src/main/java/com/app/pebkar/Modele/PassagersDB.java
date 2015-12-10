@@ -1,5 +1,7 @@
 package com.app.pebkar.Modele;
 
+import android.util.Log;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -30,6 +32,32 @@ public class PassagersDB implements Crud {
     @Override
     public void deleteData() throws Exception {
 
+    }
+
+
+    /**
+     * Vérifie si un user est déjà enregistré dans un voyage donné
+     * @param userID
+     * @param voyageID
+     * @return
+     */
+    public static boolean isUserDansVoyage(String userID, String voyageID) {
+        ParseQuery<Passagers> query = ParseQuery.getQuery(Passagers.class);
+        List<Passagers> result;
+        Log.e("[isUserDansVoyage]", userID + " ~ " + voyageID);
+        query.whereEqualTo("profil", userID);
+        query.whereEqualTo("listecovoiturage", voyageID);
+
+        try {
+            result = query.find();
+            if(result.size() == 0) {
+                return false;
+            }
+            Log.e("[isUserDansVoyage]",  "result.size : " + result.size());
+            return true;
+        }
+        // Renvoie une exception si aucun résultat trouvé
+        catch(Exception e) { return false; }
     }
 
     public static ArrayList readDataForCurrentUser(ParseUser currentUser) throws Exception {

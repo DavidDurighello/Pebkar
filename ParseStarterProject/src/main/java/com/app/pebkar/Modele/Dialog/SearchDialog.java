@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.app.pebkar.Modele.ListeCovoiturage;
 import com.app.pebkar.Modele.Passagers;
+import com.app.pebkar.Modele.PassagersDB;
 import com.app.pebkar.Modele.ProfilDB;
 import com.app.pebkar.R;
 import com.parse.ParseUser;
@@ -55,26 +57,34 @@ public class SearchDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (voyage.getNbPlaces() > 0) {
-                            System.out.println("[DEBUG] "+voyage.getNbPlaces());
+                            System.out.println("[DEBUG] " + voyage.getNbPlaces());
 
                             //Récupération du profil lié à l'utilisateur
                             ProfilDB profilDB = new ProfilDB();
+
                             try {
                                 profilDB.getProfilFromUser(ParseUser.getCurrentUser());
                             } catch (Exception e) {
-                                System.out.println("[DEBUG] Récupération du profil échouée");
+                                Log.e("[DEBUG]", "Récupération du profil échouée");
                                 e.printStackTrace();
                             }
 
                             try {
                                 Passagers passagers = new Passagers(profilDB.getProfil().getObjectId(), voyage.getObjectId(), false);
-                                passagers.saveInBackground();
-                                voyage.increment("nbPlaces", -1);
-                                voyage.saveInBackground();
-                                voyage.setNbPlaces(voyage.getNbPlaces()-1);
-                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
+
+                                // Vérification : un user ne peut participer qu'à un seul voyage
+                                if (PassagersDB.isUserDansVoyage(profilDB.getProfil().getObjectId(), voyage.getObjectId())) {
+                                    Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionDejaFaite), Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    passagers.saveInBackground();
+                                    voyage.increment("nbPlaces", -1);
+                                    voyage.saveInBackground();
+                                    voyage.setNbPlaces(voyage.getNbPlaces() - 1);
+                                    Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
+                                }
                             } catch (Exception e) {
-                                System.out.println("[DEBUG] Ajout du passager échoué");
+                                Log.e("[DEBUG]", "Ajout du passager échoué");
                                 e.printStackTrace();
                             }
 

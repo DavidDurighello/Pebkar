@@ -42,11 +42,11 @@
     <string name="retourner">Return</string>
     <string name="notEnoughPlaces">Not enough places</string>
     <string name="inscriptionValidee">Registration successful</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="inscriptionDejaFaite">You\'re already registered for this trip</string>
     <string name="fb_connected">You\'re now connected to Facebook</string>
     <string name="fb_disconnected">You\'re now disconnected from Facebook</string>
     <string name="fb_disconnection_error">Error while disconnecting from Facebook</string>
     <string name="todo">Function not implemented</string>
-
+    <string name="disconnect">Disconnect</string>
 
 </resources>
