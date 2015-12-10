@@ -56,33 +56,13 @@ public class MainActivity extends AppCompatActivity {
         // Récupération des widgets
         FBButton = (Button) findViewById(R.id.btn_fb);
 
-        // Gestion de la connexion de l'User
-            // [DEBUG]
-            //UserConnected user = new UserConnected("test","test",getApplicationContext());
-            // Connexion à user test
-            //Ajout profil test
-            /*
-            Profil profilTest = new Profil("test","test","test","055/555555",ParseUser.getCurrentUser().getObjectId());
-            profilTest.saveInBackground();
-            */
+        // Gestion de l'user FB / Parse
         currentUser = ParseUser.getCurrentUser();
         userProfile = new ProfilDB();
 
-        if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-            // Si connecté à Facebook : on regarde si un profil existe
-            // S'il existe : on le récupère
-            // S'il n'existe pas : on le crée avec les infos qu'on a de FB
-
-            if(userProfile.getProfilFromFB(Profile.getCurrentProfile())) {
-                Toast.makeText(this, "User connecté via FB (pas la 1ère connexion)", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "User connecté via FB (1ère connexion)", Toast.LENGTH_SHORT).show();
-            }
-
-            //Log.e("[FBUser - onCreate]", userProfile.toString());
+        // Changer le texte du bouton de connexion FB selon le statut connecté ou non
+        if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser) && Profile.getCurrentProfile() != null) {
             FBButton.setText(getString(R.string.disconnect));
-
         }
         else {
             FBButton.setText(getString(R.string.connect));
@@ -93,14 +73,16 @@ public class MainActivity extends AppCompatActivity {
     public void onLoginClickFacebook(View v) {
         List<String> permissions = Arrays.asList("public_profile", "email");
 
-        /**
-         * L'user n'est pas connecté à FB
-         */
-        //if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
+        //L'user n'est pas connecté à FB
         if(Profile.getCurrentProfile() == null) {
             progressDialog = ProgressDialog.show(MainActivity.this, "", "Logging in...", true);
             // NOTE: for extended permissions, like "user_about_me", your app must be reviewed by the Facebook team
             // (https://developers.facebook.com/docs/facebook-login/permissions/)
+
+            // Si un token est toujours présent, il peut être invalide
+            if(AccessToken.getCurrentAccessToken() != null) {
+                LoginManager.getInstance().logOut();
+            }
 
             ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
                 @Override
@@ -112,27 +94,23 @@ public class MainActivity extends AppCompatActivity {
                     else if (user.isNew()) {
                         Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
                         FBButton.setText(getString(R.string.disconnect));
-                        userProfile.getProfilFromFB(Profile.getCurrentProfile());
                     }
                     else {
                         Log.d(StarterApplication.TAG, "User logged in through Facebook!");
                         FBButton.setText(getString(R.string.disconnect));
-                        userProfile.getProfilFromFB(Profile.getCurrentProfile());
                     }
                     ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
                 }
             });
         }
-        /**
-         * L'user est connecté et a demandé une déconnexion
-         */
+
+        //L'user est connecté et a demandé une déconnexion
         else {
             ParseFacebookUtils.unlinkInBackground(currentUser, new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if (e == null) {
                         LoginManager.getInstance().logOut();
-                        userProfile.logOut();
                         Toast.makeText(getApplicationContext(), getString(R.string.fb_disconnected), Toast.LENGTH_SHORT).show();
                         FBButton.setText(getString(R.string.connect));
                     } else {
@@ -192,7 +170,12 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Profile FBUser = Profile.getCurrentProfile();
-            tmp += "User : " + FBUser.getId() + " - " + FBUser.getName() + " ~ " + FBUser.getLinkUri() + "\nToken : " + token.getToken();
+            if(FBUser != null) {
+                tmp += "User : " + FBUser.getId() + " - " + FBUser.getName() + " ~ " + FBUser.getLinkUri() + "\nToken : " + token.getToken();
+            }
+            else {
+                tmp += "User déconnecté de FB mais token toujours présent ?!";
+            }
         }
 
         Profile tmpProfile = Profile.getCurrentProfile();
@@ -204,7 +187,8 @@ public class MainActivity extends AppCompatActivity {
             tmp += "null";
         }
 
+        tmp += "\nParseUser ID : " + ParseUser.getCurrentUser().getObjectId();
+
         Toast.makeText(this, tmp, Toast.LENGTH_SHORT).show();
-        Log.e("test", userProfile.toString());
     }
 }

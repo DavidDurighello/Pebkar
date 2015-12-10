@@ -52,6 +52,7 @@ public class ProfilDB implements Crud {
         result = query.find();
         try {
             this.profil = result.get(0); // On tente de récupérer l'élément
+            this.profil.updateObject();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -66,6 +67,8 @@ public class ProfilDB implements Crud {
         List<Profil> result;
         ParseQuery<Profil> query = ParseQuery.getQuery(Profil.class);
         query.whereEqualTo("FBid", FBProfile.getId());
+
+        Log.e("[FBProfile]", FBProfile.toString());
 
         try {
             result = query.find();

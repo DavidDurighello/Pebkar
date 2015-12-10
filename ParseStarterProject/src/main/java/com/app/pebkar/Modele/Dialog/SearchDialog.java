@@ -16,6 +16,7 @@ import com.app.pebkar.Modele.Passagers;
 import com.app.pebkar.Modele.PassagersDB;
 import com.app.pebkar.Modele.ProfilDB;
 import com.app.pebkar.R;
+import com.facebook.Profile;
 import com.parse.ParseUser;
 
 /**
@@ -25,6 +26,7 @@ import com.parse.ParseUser;
 public class SearchDialog extends DialogFragment {
 
     TextView tv_lieuarrivee, tv_lieudepart, tv_titre, tv_datedepart, tv_datearrivee;
+    Profile FBProfile;
     ListeCovoiturage voyage;
 
     @Override
@@ -50,56 +52,65 @@ public class SearchDialog extends DialogFragment {
         }
 
 
+        builder.setView(view);
+        FBProfile = Profile.getCurrentProfile();
+
+        // User non connecté à FB ?
+        if(FBProfile == null) {
+            builder.setPositiveButton(this.getString(R.string.ok), null);
+        }
+        else {
+            builder.setPositiveButton(this.getString(R.string.inscription), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (voyage.getNbPlaces() > 0) {
+                        System.out.println("[DEBUG] " + voyage.getNbPlaces());
+
+                        //Récupération du profil lié à l'utilisateur
+                        ProfilDB profilDB = new ProfilDB();
+
+                        try {
+                            //profilDB.getProfilFromUser(ParseUser.getCurrentUser());
+                            profilDB.getProfilFromFB(FBProfile);
+                            Log.e("[SearchDialog - 67]", profilDB.toString());
+                        } catch (Exception e) {
+                            Log.e("[DEBUG]", "Récupération du profil échouée");
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            Passagers passagers = new Passagers(profilDB.getProfil().getObjectId(), voyage.getObjectId(), false);
+
+                            // Vérification : un user ne peut participer qu'à un seul voyage
+                            if (PassagersDB.isUserDansVoyage(profilDB.getProfil().getObjectId(), voyage.getObjectId())) {
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionDejaFaite), Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                passagers.saveInBackground();
+                                voyage.increment("nbPlaces", -1);
+                                voyage.saveInBackground();
+                                voyage.setNbPlaces(voyage.getNbPlaces() - 1);
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Log.e("[DEBUG]", "Ajout du passager échoué");
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.notEnoughPlaces), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNegativeButton(this.getString(R.string.retourner), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+        }
         // Inflate et set le layout pour le dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(view)
-                .setPositiveButton(this.getString(R.string.inscription), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (voyage.getNbPlaces() > 0) {
-                            System.out.println("[DEBUG] " + voyage.getNbPlaces());
-
-                            //Récupération du profil lié à l'utilisateur
-                            ProfilDB profilDB = new ProfilDB();
-
-                            try {
-                                profilDB.getProfilFromUser(ParseUser.getCurrentUser());
-                            } catch (Exception e) {
-                                Log.e("[DEBUG]", "Récupération du profil échouée");
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                Passagers passagers = new Passagers(profilDB.getProfil().getObjectId(), voyage.getObjectId(), false);
-
-                                // Vérification : un user ne peut participer qu'à un seul voyage
-                                if (PassagersDB.isUserDansVoyage(profilDB.getProfil().getObjectId(), voyage.getObjectId())) {
-                                    Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionDejaFaite), Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    passagers.saveInBackground();
-                                    voyage.increment("nbPlaces", -1);
-                                    voyage.saveInBackground();
-                                    voyage.setNbPlaces(voyage.getNbPlaces() - 1);
-                                    Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.inscriptionValidee), Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (Exception e) {
-                                Log.e("[DEBUG]", "Ajout du passager échoué");
-                                e.printStackTrace();
-                            }
-
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), getActivity().getApplicationContext().getResources().getText(R.string.notEnoughPlaces), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-
-                .setNegativeButton(this.getString(R.string.retourner), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
 
         return builder.create();
     }
