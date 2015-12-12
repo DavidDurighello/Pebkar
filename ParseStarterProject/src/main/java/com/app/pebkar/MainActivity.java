@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.app.pebkar.Modele.ProfilDB;
 import com.app.pebkar.Test.TestListeCovoiturage;
+import com.app.pebkar.Tools.NetTools;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
@@ -73,53 +74,62 @@ public class MainActivity extends AppCompatActivity {
     public void onLoginClickFacebook(View v) {
         List<String> permissions = Arrays.asList("public_profile", "email");
 
-        //L'user n'est pas connecté à FB
-        if(Profile.getCurrentProfile() == null) {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", "Logging in...", true);
-            // NOTE: for extended permissions, like "user_about_me", your app must be reviewed by the Facebook team
-            // (https://developers.facebook.com/docs/facebook-login/permissions/)
+        // Dispose-t-on d'une connexion ?
+        if(NetTools.checkConnection(this)) {
 
-            // Si un token est toujours présent, il peut être invalide
-            if(AccessToken.getCurrentAccessToken() != null) {
-                LoginManager.getInstance().logOut();
+            //L'user n'est pas connecté à FB
+            if(Profile.getCurrentProfile() == null) {
+                progressDialog = ProgressDialog.show(MainActivity.this, "", "Logging in...", true);
+                // NOTE: for extended permissions, like "user_about_me", your app must be reviewed by the Facebook team
+                // (https://developers.facebook.com/docs/facebook-login/permissions/)
+
+                // Si un token est toujours présent, il peut être invalide
+                if(AccessToken.getCurrentAccessToken() != null) {
+                    LoginManager.getInstance().logOut();
+                }
+
+                ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException err) {
+                        progressDialog.dismiss();
+                        if (user == null) {
+                            Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
+                        }
+                        else if (user.isNew()) {
+                            Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
+                            FBButton.setText(getString(R.string.disconnect));
+                        }
+                        else {
+                            Log.d(StarterApplication.TAG, "User logged in through Facebook!");
+                            FBButton.setText(getString(R.string.disconnect));
+                        }
+                        ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
+                    }
+                });
             }
 
-            ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException err) {
-                    progressDialog.dismiss();
-                    if (user == null) {
-                        Log.d(StarterApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
+            //L'user est connecté et a demandé une déconnexion
+            else {
+                ParseFacebookUtils.unlinkInBackground(currentUser, new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            LoginManager.getInstance().logOut();
+                            Toast.makeText(getApplicationContext(), getString(R.string.fb_disconnected), Toast.LENGTH_SHORT).show();
+                            FBButton.setText(getString(R.string.connect));
+                        } else {
+                            Toast.makeText(getApplicationContext(), getString(R.string.fb_disconnection_error), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else if (user.isNew()) {
-                        Log.d(StarterApplication.TAG, "User signed up and logged in through Facebook!");
-                        FBButton.setText(getString(R.string.disconnect));
-                    }
-                    else {
-                        Log.d(StarterApplication.TAG, "User logged in through Facebook!");
-                        FBButton.setText(getString(R.string.disconnect));
-                    }
-                    ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
-                }
-            });
-        }
+                });
 
-        //L'user est connecté et a demandé une déconnexion
+            }
+
+        }
         else {
-            ParseFacebookUtils.unlinkInBackground(currentUser, new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        LoginManager.getInstance().logOut();
-                        Toast.makeText(getApplicationContext(), getString(R.string.fb_disconnected), Toast.LENGTH_SHORT).show();
-                        FBButton.setText(getString(R.string.connect));
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.fb_disconnection_error), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
+            Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
         }
+
 
 
     }
@@ -147,6 +157,10 @@ public class MainActivity extends AppCompatActivity {
     //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, getString(R.string.todo), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if(id == R.id.action_about) {
+            startActivity(new Intent(this, About.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

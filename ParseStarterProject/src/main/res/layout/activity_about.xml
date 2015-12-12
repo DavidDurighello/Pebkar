@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:stretchColumns="*">
+
+        <TableRow>
+            <ImageView
+                style="@style/about_text.center"
+                android:background="@drawable/ic_info_blue_500_48dp"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/about_text.center.title"
+                android:text="@string/app_name"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/about"
+                style="@style/about_text"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="@string/about2"
+                style="@style/about_text"
+                />
+        </TableRow>
+
+        <TableRow>
+            <ImageView
+                style="@style/about_text.center"
+                android:background="@drawable/ic_assignment_ind_blue_500_48dp"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/authors"
+                style="@style/about_text.center.title"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/about_text.center.authors"
+                android:text="@string/author_d"
+                android:paddingRight="15dp"
+                />
+            <TextView
+                style="@style/about_text.center.authors"
+                android:text="@string/author_h"
+                />
+        </TableRow>
+
+    </TableLayout>
+
+
+</ScrollView>

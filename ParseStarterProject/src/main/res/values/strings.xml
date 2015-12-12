@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2015-present, Parse, LLC.
   ~ All rights reserved.
   ~
@@ -17,6 +16,8 @@
     <string name="hello_world" translatable="false">Hello World!</string>
     <string name="action_settings">Paramètres</string>
     <string name="ok" translatable="false">Ok</string>
+    <string name="no_connection">Veuillez vous connecter pour effectuer cette action.</string>
+    <string name="error_unknown">Une erreur est survenue.</string>
     <string name="action_example" translatable="false">Pebkar</string>
     <string name="todo">Fonction non implémentée</string>
 
@@ -49,7 +50,7 @@
     <string name="d_search_datearrivee">Arrivée le</string>
     <string name="d_search_loading">Chargement des données en cours…</string>
     <string name="d_search_error">Erreur lors du chargement des données</string>
-    
+
     <!-- Jours de la semaine -->
 
     <string name="monday">Lundi</string>
@@ -66,4 +67,12 @@
     <string name="notEnoughPlaces">Plus de places disponibles</string>
     <string name="inscriptionValidee">Inscription réussie</string>
     <string name="inscriptionDejaFaite">Inscription déjà effectuée à ce voyage</string>
+
+    <!-- A propos de -->
+    <string name="aboutMenu">À propos de…</string>
+    <string name="about2">L\'application fonctionne grâce à l\'API de Facebook, un compte Facebook est donc <b>requis</b> pour utiliser Pebkar.</string>
+    <string name="authors">Auteurs</string>0
+    <string name="author_d" translatable="false">Durighello David</string>
+    <string name="author_h" translatable="false">Hendrickx Matthias</string>
+    <string name="about"><b>Pebkar</b> est une application développée dans le but de faciliter le covoiturage entre plusieurs voyageurs.</string>
 </resources>

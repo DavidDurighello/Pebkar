@@ -48,5 +48,11 @@
     <string name="fb_disconnection_error">Error while disconnecting from Facebook</string>
     <string name="todo">Function not implemented</string>
     <string name="disconnect">Disconnect</string>
+    <string name="about"><b>Pebkar</b> is an Android application developed for making carpooling with some users easier.</string>
+    <string name="about2">This application works thanks to Facebook\'s API so a Facebook account is <b>required</b> for using Pebkar.</string>
+    <string name="aboutMenu">About…</string>
+    <string name="authors">Authors</string>
+    <string name="error_unknown">An error has occured.</string>
+    <string name="no_connection">Please sign in to perform this action.</string>
 
 </resources>

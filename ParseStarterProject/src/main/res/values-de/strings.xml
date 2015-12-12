@@ -34,4 +34,10 @@
     <string name="ville_hint">Schreiben Sie eine Stadt hier …</string>
     <string name="wednesday">Mittwoch</string>
     <string name="inscriptionDejaFaite">Sie sind bereits für diese Reise registriert</string>
+    <string name="about"><b>Pebkar</b> ist eine Android-Anwendung für die Herstellung von Fahrgemeinschaften mit einigen Benutzern leichter entwickelt.</string>
+    <string name="about2">Diese Anwendung funktioniert dank der Facebook-API, so ein Facebook-Konto ist <b> erforderlich </ b> für die Verwendung Pebkar.</string>
+    <string name="aboutMenu">Über…</string>
+    <string name="authors">Autoren</string>
+    <string name="error_unknown">Ein Fehler ist aufgetreten.</string>
+    <string name="no_connection">Bitte loggen Sie sich ein, um diese Aktion durchzuführen.</string>
 </resources>
