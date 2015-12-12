@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.app.pebkar.Modele.ProfilDB;
-import com.app.pebkar.Test.TestListeCovoiturage;
 import com.app.pebkar.Tools.NetTools;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
@@ -103,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(StarterApplication.TAG, "User logged in through Facebook!");
                             FBButton.setText(getString(R.string.disconnect));
                         }
-                        ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
+                        // Le token peut aussi être null en cas de fermeture du DialogFragment
+                        if(AccessToken.getCurrentAccessToken() != null) {
+                            ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
+                        }
                     }
                 });
             }
@@ -171,8 +173,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, "Activity Search");
         startActivity(intent);
     }
-
-
 
     public void debugInfo(View view) {
         AccessToken token = AccessToken.getCurrentAccessToken();
