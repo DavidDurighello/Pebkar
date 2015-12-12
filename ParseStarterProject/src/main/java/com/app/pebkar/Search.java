@@ -1,14 +1,10 @@
 package com.app.pebkar;
 
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +13,6 @@ import com.app.pebkar.Modele.Dialog.SearchDialog;
 import com.app.pebkar.Modele.ListeCovoiturage;
 import com.app.pebkar.Modele.ListeCovoiturageDB;
 import com.app.pebkar.Tools.NetTools;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +71,7 @@ public class Search extends AppCompatActivity {
      * Gestion de l'orientation en sauvegardant les données
      * @param bundle
      */
+    @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putString("et_ville", et_ville.getText().toString());

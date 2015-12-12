@@ -17,7 +17,6 @@ import com.app.pebkar.Modele.PassagersDB;
 import com.app.pebkar.Modele.ProfilDB;
 import com.app.pebkar.R;
 import com.facebook.Profile;
-import com.parse.ParseUser;
 
 /**
  * Created by Lyyn on 30-11-15.
@@ -28,6 +27,7 @@ public class SearchDialog extends DialogFragment {
     TextView tv_lieuarrivee, tv_lieudepart, tv_titre, tv_datedepart, tv_datearrivee;
     Profile FBProfile;
     ListeCovoiturage voyage;
+    public static ListeCovoiturage voyagestatic;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,15 +42,24 @@ public class SearchDialog extends DialogFragment {
         tv_datedepart = (TextView) view.findViewById(R.id.tv_d_search_datedepart);
         tv_datearrivee = (TextView) view.findViewById(R.id.tv_d_search_datearrivee);
 
-        if(voyage != null) {
-            tv_titre.append(" #" + voyage.getIdListeCovoiturage());
-            tv_lieudepart.setText(voyage.getLieudepart());
-            tv_lieuarrivee.setText(voyage.getLieuarrivee());
-            tv_datedepart.setText(voyage.getDatedepartStr());
-            tv_datearrivee.setText(voyage.getDatearriveeStr());
-            tv_lieudepart.setText(voyage.getLieudepart());
-        }
+        if(savedInstanceState == null){
 
+            if(voyage != null) {
+                tv_titre.append(" #" + voyage.getIdListeCovoiturage());
+                tv_lieudepart.setText(voyage.getLieudepart());
+                tv_lieuarrivee.setText(voyage.getLieuarrivee());
+                tv_datedepart.setText(voyage.getDatedepartStr());
+                tv_datearrivee.setText(voyage.getDatearriveeStr());
+            }
+        } else {
+
+            tv_titre.setText(savedInstanceState.getString("tv_titre"));
+            tv_lieudepart.setText(savedInstanceState.getString("tv_lieudepart"));
+            tv_lieuarrivee.setText(savedInstanceState.getString("tv_lieuarrivee"));
+            tv_datedepart.setText(savedInstanceState.getString("tv_datedepart"));
+            tv_datearrivee.setText(savedInstanceState.getString("tv_datearrivee"));
+            voyage = voyagestatic;
+        }
 
         builder.setView(view);
         FBProfile = Profile.getCurrentProfile();
@@ -115,6 +124,20 @@ public class SearchDialog extends DialogFragment {
         return builder.create();
     }
 
+    /**
+     * Gestion de l'orientation en sauvegardant les données
+     * @param bundle
+     */
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putString("tv_titre", tv_titre.getText().toString());
+        bundle.putString("tv_lieuarrivee", tv_lieuarrivee.getText().toString());
+        bundle.putString("tv_lieudepart", tv_lieudepart.getText().toString());
+        bundle.putString("tv_datedepart", tv_datedepart.getText().toString());
+        bundle.putString("tv_datearrivee", tv_datearrivee.getText().toString());
+        voyagestatic = voyage;
+    }
 
     public ListeCovoiturage getVoyage() {
         return voyage;
